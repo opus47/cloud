@@ -1,0 +1,55 @@
+{
+
+  "composer": {
+    "@id": "https://opus47.org/composers/<name>",
+    "name": "<name>"
+  },
+
+  "piece": {
+    "@id": "https://opus47.org/pieces/<name>",
+    "composer": "https://opus47.org/composers/<name>",
+    "title": "<title>",
+    "movements": [{
+      "@id": "https://opus47.org/pieces/<name>/movements/<#>",
+      "title": "<title>",
+      "number": <#>,
+      "key": "https://opus47.org/keys/<name>"
+    }],
+    "parts": [
+      "https://opus47.org/parts/<name>"
+    ]
+  },
+
+  "performance": {
+    "@id": "https://opus47.org/performances/<name>",
+    "venue": "https://opus47.org/venues/<name>",
+    "date": "<date>",
+    "piece": "https://opus47.org/pieces/<name>",
+    "performers": [{
+      "musician": "https://opus47.org/musicians/<name>",
+      "part": "https://opus47.org/parts/<name>"
+    }]
+  },
+
+  "recording": {
+    "@id": "https://opus47.org/recordings/<name>",
+    "performance": "https://opus47.org/performances/<name>",
+    "movement": <#>,
+    "file": "<path>"
+  },
+
+  "musician": {
+    "@id": "https://opus47.org/musicians/<name>",
+    "name": "<name>"
+  },
+
+  "part": {
+    "@id": "https://opus47.org/parts/<name>",
+    "name": "<name>"
+  },
+
+  "key": {
+    "@id": "https://opus47.org/keys/<name>",
+    "key": "<name>"
+  }
+}

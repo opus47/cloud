@@ -1,0 +1,50 @@
+[
+  {
+    "@id": "https://opus47.org/parts/violin_1",
+    "name": "Violin 1"
+  },
+  {
+    "@id": "https://opus47.org/parts/violin_2",
+    "name": "Violin 2"
+  },
+  {
+    "@id": "https://opus47.org/parts/violin_3",
+    "name": "Violin 3"
+  },
+  {
+    "@id": "https://opus47.org/parts/violin_4",
+    "name": "Violin 4"
+  },
+  {
+    "@id": "https://opus47.org/parts/viola_1",
+    "name": "Viola 1"
+  },
+  {
+    "@id": "https://opus47.org/parts/viola_2",
+    "name": "Viola 2"
+  },
+  {
+    "@id": "https://opus47.org/parts/viola_3",
+    "name": "Viola 3"
+  },
+  {
+    "@id": "https://opus47.org/parts/viola_4",
+    "name": "Viola 4"
+  },
+  {
+    "@id": "https://opus47.org/parts/cello_1",
+    "name": "Cello 1"
+  },
+  {
+    "@id": "https://opus47.org/parts/cello_2",
+    "name": "Cello 2"
+  },
+  {
+    "@id": "https://opus47.org/parts/piano_1",
+    "name": "Piano 1"
+  },
+  {
+    "@id": "https://opus47.org/parts/piano_2",
+    "name": "Piano 2"
+  }
+]

@@ -1,0 +1,26 @@
+
+"performances": [
+  {
+    "performance": {
+      "@id": "https://opus47.org/performances/olyfest14-brahms-op96",
+      "venue": "Olympic Music Festival",
+      "date": "2014",
+      "piece": "https://opus47.org/pieces/brahms_op96",
+      "performers": [
+        {
+          "musician": "https//opus47.org/musicians/cindy_wu",
+          "part": "https://opus47.org/parts/violin_1" 
+        }
+      ]
+    }
+  }
+],
+
+"recordings": [
+  {
+    "@id": "https//opus47.org/recordings/olyfest14-brahms-op96-1",
+    "performance": "https://opus47.org/performances/olyfest14-brahms-op96",
+    "movement": 1,
+    "file": "https://my.opus47.org/recordings/olyfest14-brahms-op96-1"
+  }
+]

@@ -1,0 +1,707 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: opus47
+  license:
+    name: Apache 2.0 
+host: opus47.goodwu.net
+basePath: /
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Composers
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  '/composers':
+    get:
+      summary: List composers
+      description: List composers
+
+      responses:
+        '200':
+          description: List of composers
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Composer'
+
+  '/composers/{id}':
+    get:
+      summary: Get composer information
+      description: Get composer information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Composer information
+          schema:
+            $ref: '#/definitions/Composer'
+    put:
+      summary: Add or update a composer
+      description: Add or update a composer
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The composer to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Composer'
+
+      responses:
+        '200':
+          description: Composer updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a composer
+      description: Delete a composer
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Composer deleted
+        '403':
+          description: Unauthorized
+
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Pieces
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  #TODO should take in search string
+  '/pices':
+    get:
+      summary: List pieces
+      description: List pieces
+
+      responses:
+        '200':
+          description: List of pieces
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Piece'
+
+  '/pieces/{id}':
+    get:
+      summary: Get piece information
+      description: Get pieces information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      
+      responses:
+        '200':
+          description: Piece information
+          schema:
+            $ref: '#/definitions/Piece'
+
+    put:
+      summary: Add or update a piece
+      description: Add or update a piece
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The piece to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Piece'
+
+      responses:
+        '200':
+          description: Piece updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a piece
+      description: Delete a piece
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Piece deleted
+        '403':
+          description: Unauthorized
+
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Performances
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  #TODO should take in search string
+  '/performances':
+    get:
+      summary: List performances
+      description: List performances
+
+      responses:
+        '200':
+          description: List of performances
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Performance'
+
+  '/performances/{id}':
+    get:
+      summary: Get performance information
+      description: Get performance information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      
+      responses:
+        '200':
+          description: Performance information
+          schema:
+            $ref: '#/definitions/Performance'
+
+    put:
+      summary: Add or update a performance
+      description: Add or update a performance
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The performance to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Performance'
+
+      responses:
+        '200':
+          description: Performance updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a performance
+      description: Delete a performance
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Performance deleted
+        '403':
+          description: Unauthorized
+
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Recordings
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  #TODO should take in search string
+  '/recordings':
+    get:
+      summary: List recordings
+      description: List recordings
+
+      responses:
+        '200':
+          description: List of recordings
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Recording'
+
+  '/recordings/{id}':
+    get:
+      summary: Get recording information
+      description: Get recording information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      
+      responses:
+        '200':
+          description: Recording information
+          schema:
+            $ref: '#/definitions/Recording'
+
+    put:
+      summary: Add or update a recording
+      description: Add or update a recording
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The recording to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Recording'
+
+      responses:
+        '200':
+          description: Recording updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a recording
+      description: Delete a recording
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Recording deleted
+        '403':
+          description: Unauthorized
+  
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Musicians
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  #TODO should take in search string
+  '/musicians':
+    get:
+      summary: List musicians
+      description: List musicians
+
+      responses:
+        '200':
+          description: List of musicians
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Musician'
+
+  '/musicians/{id}':
+    get:
+      summary: Get musician information
+      description: Get musician information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      
+      responses:
+        '200':
+          description: Musician information
+          schema:
+            $ref: '#/definitions/Musician'
+
+    put:
+      summary: Add or update a musician
+      description: Add or update a musician
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The musician to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Musician'
+
+      responses:
+        '200':
+          description: Musician updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a musician
+      description: Delete a musician
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Musician deleted
+        '403':
+          description: Unauthorized
+
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Parts
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  #TODO should take in search string
+  '/parts':
+    get:
+      summary: List parts
+      description: List parts
+
+      responses:
+        '200':
+          description: List of parts
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Part'
+
+  '/parts/{id}':
+    get:
+      summary: Get part information
+      description: Get part information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      
+      responses:
+        '200':
+          description: Part information
+          schema:
+            $ref: '#/definitions/Part'
+
+    put:
+      summary: Add or update a part
+      description: Add or update a part
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The part to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Part'
+
+      responses:
+        '200':
+          description: Part updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a part
+      description: Delete a part
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Part deleted
+        '403':
+          description: Unauthorized
+
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #
+  # Keys
+  #
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  #TODO should take in search string
+  '/keys':
+    get:
+      summary: List keys
+      description: List keys
+
+      responses:
+        '200':
+          description: List of keys
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Performance'
+
+  '/keys/{id}':
+    get:
+      summary: Get key information
+      description: Get key information
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      
+      responses:
+        '200':
+          description: Key information
+          schema:
+            $ref: '#/definitions/Key'
+
+    put:
+      summary: Add or update a key
+      description: Add or update a key
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+        - name: data
+          description: The key to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Key'
+
+      responses:
+        '200':
+          description: Key updated
+        '403':
+          description: Unauthorized
+
+    delete:
+      summary: Delete a key
+      description: Delete a key
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+
+        - name: authorization
+          description: API access authorization in JWT access token format
+          in: header
+          type: string
+          required: true
+
+      responses:
+        '200':
+          description: Key deleted
+        '403':
+          description: Unauthorized
+
+
+
+definitions:
+  Composer:
+    properties:
+      id:
+        type: string #uri
+      name:
+        type: string
+
+  Piece:
+    properties:
+      id:
+        type: string #uri
+      title:
+        type: string
+      composer:
+        type: string #uri ref
+      movements:
+        type: array
+        items:
+          $ref: '#/definitions/Movement'
+      parts:
+        type: array
+        items:
+          $ref: '#/definitions/Part'
+
+  Movement:
+    properties:
+      id:
+        type: string #uri
+      title:
+        type: string
+      number:
+        type: integer
+      key:
+        type: string #uri ref
+
+  Part:
+    properties:
+      id:
+        type: string # uri
+      name:
+        type: string
+
+  Key:
+    properties:
+      id:
+        type: string # uri
+      name:
+        type: string
+
+  #####
+  
+  Performance:
+    properties:
+      id:
+        type: string #uri
+      venue:
+        type: string
+      description:
+        type: string
+      date:
+        type: string
+      date:
+        type: string #uri reference
+      performers:
+        type: array
+        items:
+          $ref: '#/definitions/Performer'
+
+  Performer:
+    properties:
+      musician:
+        type: string #uri ref
+      part:
+        type: string #uri ref
+
+  Musician:
+    properties:
+      id:
+        type: string #uri
+      name:
+        type: string
+
+  Recording:
+    properties:
+      id:
+        type: string #uri
+      performance:
+        type: string #uri ref
+      movement:
+        type: integer
+      file:
+        type: string
+
+
+
