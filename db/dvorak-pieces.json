@@ -1,0 +1,34 @@
+[
+  {
+    "piece": {
+      "@id": "https://opus47.org/pieces/dvorak_op96",
+      "composer": "https://opus47.org/composers/dvorak",
+      "title": "String Quintet",
+      "key": "https://opus47.org/keys/f_major",
+      "catalogue": "Opus 96",
+      "number": 12,
+      "movements": [
+        {
+          "@id": "https://opus47.org/pieces/dvorak_op96/movements/1",
+          "title": "Allegro ma non troppo",
+          "number": 1
+        },
+        {
+          "@id": "https://opus47.org/pieces/dvorak_op96/movements/2",
+          "title": "Lento",
+          "number": 2
+        },
+        {
+          "@id": "https://opus47.org/pieces/dvorak_op96/movements/3",
+          "title": "Molto vivace",
+          "number": 3
+        },
+        {
+          "@id": "https://opus47.org/pieces/dvorak_op96/movements/4",
+          "title": "Finale. Vivace ma non troppo",
+          "number": 4
+        }
+      ]
+    }
+  }
+]

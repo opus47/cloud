@@ -1,33 +1,32 @@
 [
   {
     "piece": {
-      "@id": "https://opus47.org/pieces/brahms_op96",
+      "@id": "https://opus47.org/pieces/brahms_op26",
       "composer": "https://opus47.org/composers/brahams",
-      "title": "Piano Quartet No. 2",
+      "title": "Piano Quartet",
+      "key": "https://opus47.org/keys/a_major",
+      "catalogue": "Opus 26",
+      "number": 2,
       "movements": [
         {
-          "@id": "https://opus47.org/pieces/brahms_op96/movements/1",
+          "@id": "https://opus47.org/pieces/brahms_op26/movements/1",
           "title": "Allegro non troppo",
-          "number": 1,
-          "key": "https://opus47.org/keys/a_major"
+          "number": 1
         },
         {
-          "@id": "https://opus47.org/pieces/brahms_op96/movements/2",
+          "@id": "https://opus47.org/pieces/brahms_op26/movements/2",
           "title": "Poca adagio",
-          "number": 2,
-          "key": "https://opus47.org/keys/a_major"
+          "number": 2
         },
         {
-          "@id": "https://opus47.org/pieces/brahms_op96/movements/3",
+          "@id": "https://opus47.org/pieces/brahms_op26/movements/3",
           "title": "Scherzo. Poco Allegro - Trio",
-          "number": 3,
-          "key": "https://opus47.org/keys/a_major"
+          "number": 3
         },
         {
-          "@id": "https://opus47.org/pieces/brahms_op96/movements/4",
+          "@id": "https://opus47.org/pieces/brahms_op26/movements/4",
           "title": "Finale. Allegro",
-          "number": 4,
-          "key": "https://opus47.org/keys/a_major"
+          "number": 4
         }
       ]
     }
