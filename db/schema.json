@@ -8,12 +8,14 @@
   "piece": {
     "@id": "https://opus47.org/pieces/<name>",
     "composer": "https://opus47.org/composers/<name>",
-    "title": "<title>",
+    "instrumentation": "<string quartet>",
+    "key": "https://opus47.org/keys/<name>",
+    "catalog": "<catalog>",
+    "number": "<number>",
     "movements": [{
       "@id": "https://opus47.org/pieces/<name>/movements/<#>",
       "title": "<title>",
-      "number": <#>,
-      "key": "https://opus47.org/keys/<name>"
+      "number": <#>
     }],
     "parts": [
       "https://opus47.org/parts/<name>"
@@ -22,6 +24,7 @@
 
   "performance": {
     "@id": "https://opus47.org/performances/<name>",
+    "association": "https://opus47.org/association/<name>",
     "venue": "https://opus47.org/venues/<name>",
     "date": "<date>",
     "piece": "https://opus47.org/pieces/<name>",
