@@ -104,10 +104,28 @@ paths:
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   #TODO should take in search string
-  '/pices':
+  '/pieces':
     get:
       summary: List pieces
       description: List pieces
+
+      responses:
+        '200':
+          description: List of pieces
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Piece'
+
+  '/pieces/search':
+    get:
+      summary: Search pieces
+      description: Search pieces
+      parameters:
+        - in: query
+          name: text
+          type: string
+          description: The search text
 
       responses:
         '200':
