@@ -1,8 +1,12 @@
 
 [
   {
-    "@id": "https://opus47.org/composers/brahams",
+    "@id": "https://opus47.org/composers/brahms",
     "name": "Johannes Brahams"
+  },
+  {
+    "@id": "https://opus47.org/composers/dvorak",
+    "name": "Antonin Dvorak"
   },
   {
     "@id": "https://opus47.org/composers/mozart",
