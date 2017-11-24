@@ -134,6 +134,8 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Piece'
+        '500':
+          description: Internal Error
 
   '/pieces/{id}':
     get:

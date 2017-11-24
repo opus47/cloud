@@ -582,6 +582,9 @@ func init() {
                 "$ref": "#/definitions/Piece"
               }
             }
+          },
+          "500": {
+            "description": "Internal Error"
           }
         }
       }
