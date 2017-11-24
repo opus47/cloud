@@ -1,6 +1,7 @@
 -- The Opus47 PostgreSQL database
 
 CREATE EXTENSION pgcrypto;
+CREATE EXTENSION unaccent;
 
 ---
 --- Composer / Piece Information

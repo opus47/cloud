@@ -80,7 +80,7 @@ DECLARE
 BEGIN
 
   SELECT id INTO composer_id FROM composers 
-  WHERE first = pcomposer_first AND last = pcomposer_last
+  WHERE unaccent(first) = pcomposer_first AND unaccent(last) = pcomposer_last
   ;
 
   SELECT id INTO key_ID FROM keys where name = pkey
@@ -111,4 +111,16 @@ SELECT new_piece(
   ]
 );
 
+SELECT new_piece(
+  'Antonin', 'Dvorak',
+  'String Quintet',
+  'F Major',
+  12,
+  ARRAY[
+  'Allegro ma non troppo',
+  'Lento',
+  'Molto vivace',
+  'Finale. Vivace ma non troppo'
+  ]
+);
 
