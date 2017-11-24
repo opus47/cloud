@@ -2,7 +2,7 @@ FROM golang:latest
 
 MAINTAINER Ryan Goodfellow rcgoodfellow@gmail.com
 
-WORKDIR /go/src/github.com/rcgoodfellow/opus47/api
+WORKDIR /go/src/github.com/opus47/cloud
 
 # Right now this is a combination build+deploy container. In the future
 # consider separating the two
@@ -17,6 +17,7 @@ RUN go-wrapper install \
 RUN mkdir -p ~/.ssh
 
 COPY . . 
+WORKDIR /go/src/github.com/opus47/cloud/api
 RUN swagger generate server -f openapi.yml
 RUN go-wrapper download ./...
 RUN go-wrapper download ./cmd/opus47-server

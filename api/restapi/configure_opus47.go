@@ -11,7 +11,8 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 	graceful "github.com/tylerb/graceful"
 
-	"github.com/rcgoodfellow/opus47/api/restapi/operations"
+	"github.com/opus47/cloud/api/models"
+	"github.com/opus47/cloud/api/restapi/operations"
 )
 
 // This file is safe to edit. Once it exists it will not be overwritten
@@ -93,9 +94,38 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 	api.GetPiecesIDHandler = operations.GetPiecesIDHandlerFunc(func(params operations.GetPiecesIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetPiecesID has not yet been implemented")
 	})
-	api.GetPiecesSearchHandler = operations.GetPiecesSearchHandlerFunc(func(params operations.GetPiecesSearchParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetPiecesSearch has not yet been implemented")
-	})
+
+	/*
+	 *
+	 */
+
+	api.GetPiecesSearchHandler = operations.GetPiecesSearchHandlerFunc(
+		func(params operations.GetPiecesSearchParams) middleware.Responder {
+			return operations.NewGetPiecesSearchOK().WithPayload([]*models.Piece{
+				&models.Piece{
+					Composer: "Antonin Dvorak",
+					ID:       "ce3a42c248",
+					Key:      "A Flat Major",
+					Movements: models.PieceMovements{
+						&models.Movement{
+							ID:     "234a234bd",
+							Number: 1,
+							Title:  "molto",
+						},
+						&models.Movement{
+							ID:     "234a234bc",
+							Number: 2,
+							Title:  "adagio",
+						},
+					},
+				},
+			})
+		})
+
+	/*
+	 *
+	 */
+
 	api.GetRecordingsHandler = operations.GetRecordingsHandlerFunc(func(params operations.GetRecordingsParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetRecordings has not yet been implemented")
 	})
