@@ -166,6 +166,7 @@ SELECT
   c.last AS cname,
   p.title AS ptitle,
   k.name AS kname,
+  m.title AS mname,
   to_tsvector('english', c.first) ||
   to_tsvector('english', c.last) ||
 
