@@ -29,6 +29,7 @@ CREATE TABLE pieces (
   title     text      NOT NULL,
   key       UUID      REFERENCES keys NOT NULL,
   number    integer,
+  catalog   text,
 
   UNIQUE (composer, title, key, number)
 );
@@ -57,14 +58,6 @@ CREATE TABLE movement_parts (
   UNIQUE(movement, part)
 );
 
-CREATE TABLE catalog (
-  id      UUID  PRIMARY KEY DEFAULT gen_random_uuid(),
-  piece   UUID  REFERENCES pieces NOT NULL,
-  name    text,
-
-  UNIQUE(piece, name)
-);
-
 ---
 --- Musician / Performance Information
 ---
@@ -72,7 +65,7 @@ CREATE TABLE catalog (
 CREATE TABLE musicians (
   id      UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   first   text NOT NULL,
-  middle  text NOT NULL,
+  middle  text,
   last    text NOT NULL,
 
   UNIQUE(first, middle, last)
