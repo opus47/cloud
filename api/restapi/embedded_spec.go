@@ -865,6 +865,9 @@ func init() {
     },
     "Piece": {
       "properties": {
+        "catalog": {
+          "type": "string"
+        },
         "composer": {
           "type": "string"
         },

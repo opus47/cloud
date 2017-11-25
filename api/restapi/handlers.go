@@ -73,6 +73,7 @@ func handleGetPiecesSearch(
 		log.Printf("pg-connect error: %v", err)
 		return operations.NewGetPiecesSearchInternalServerError()
 	}
+	defer db.Close()
 
 	result := []*models.Piece{}
 
@@ -93,7 +94,7 @@ func handleGetPiecesSearch(
 	log.Printf("[Pieces-Search] query: %s", search_string)
 
 	rows, err := db.Query(`
-	select pid, cname, ptitle, kname from mv_pieces
+	select pid, cname, ptitle, kname, pcatalog from mv_pieces
 	where document @@ to_tsquery('english', '` + search_string + `')
 	`)
 	if err != nil {
@@ -104,7 +105,7 @@ func handleGetPiecesSearch(
 	defer rows.Close()
 	for rows.Next() {
 		p := &models.Piece{}
-		err := rows.Scan(&p.ID, &p.Composer, &p.Title, &p.Key)
+		err := rows.Scan(&p.ID, &p.Composer, &p.Title, &p.Key, &p.Catalog)
 		if err != nil {
 			log.Printf("pg-scan error: %v", err)
 			return operations.NewGetPiecesSearchInternalServerError()

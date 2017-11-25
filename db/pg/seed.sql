@@ -9,7 +9,8 @@
 INSERT INTO composers (first, middle, last) values
 ('Johannes', NULL, 'Brahms'),
 ('Antonin', 'Leopold', 'Dvořák'),
-('Wolfgang', 'Amadeus', 'Mozart')
+('Wolfgang', 'Amadeus', 'Mozart'),
+('Ludwig', 'van', 'Beethoven')
 ;
 
 --- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -163,6 +164,23 @@ SELECT new_piece(
   'Allegro vivo',
   'Larghetto',
   'Finale. Allegro giusto'
+  ]
+);
+
+SELECT new_piece(
+  'Ludwig', 'Beethoven',
+  'String Quintet',
+  'C Sharp Minor',
+  14,
+  'Opus 131',
+  ARRAY[
+  'Adagio ma non troppo e molto espressivo',
+  'Allegro molto vivace',
+  'Allegro moderato',
+  'Andante ma non troppo e molto cantabile',
+  'Presto',
+  'Adagio quasi un poco andante',
+  'Allegro'
   ]
 );
 

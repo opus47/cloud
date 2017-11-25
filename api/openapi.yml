@@ -644,9 +644,11 @@ definitions:
       title:
         type: string
       composer:
-        type: string #uri ref
+        type: string
       key:
-        type: string #uri ref
+        type: string 
+      catalog:
+        type: string
       movements:
         type: array
         items:
@@ -692,7 +694,7 @@ definitions:
       date:
         type: string
       date:
-        type: string #uri reference
+        type: string 
       performers:
         type: array
         items:
@@ -701,9 +703,9 @@ definitions:
   Performer:
     properties:
       musician:
-        type: string #uri ref
+        type: string
       part:
-        type: string #uri ref
+        type: string
 
   Musician:
     properties:
@@ -717,7 +719,7 @@ definitions:
       id:
         type: string #uri
       performance:
-        type: string #uri ref
+        type: string 
       movement:
         type: integer
       file:

@@ -16,6 +16,9 @@ import (
 // swagger:model Piece
 type Piece struct {
 
+	// catalog
+	Catalog string `json:"catalog,omitempty"`
+
 	// composer
 	Composer string `json:"composer,omitempty"`
 

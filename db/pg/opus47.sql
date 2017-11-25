@@ -135,8 +135,9 @@ SELECT
   c.first || ' ' || c.last AS cname,
   p.title AS ptitle,
   k.name AS kname,
-  to_tsvector('english', c.first) ||
-  to_tsvector('english', c.last) ||
+  p.catalog AS pcatalog,
+  to_tsvector('english', unaccent(c.first)) ||
+  to_tsvector('english', unaccent(c.last)) ||
 
   to_tsvector('english', p.title) || 
   to_tsvector('english', to_char(p.number, '999')) ||
