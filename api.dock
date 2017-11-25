@@ -12,7 +12,8 @@ RUN go-wrapper download \
 
 RUN go-wrapper install \
   github.com/go-swagger/go-swagger/cmd/swagger \
-  github.com/rs/cors
+  github.com/rs/cors \
+  github.com/lib/pq
 
 RUN mkdir -p ~/.ssh
 

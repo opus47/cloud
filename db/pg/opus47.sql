@@ -95,4 +95,57 @@ CREATE TABLE performer (
   UNIQUE(performance, musician, part)
 );
 
+-- Create a materialized view for seraching movements
+-- To update this view use `REFRESH MATERIALIZED VIEW mv_movements`
+--
+-- searching:
+-- select cname, ptitle, kname from mv_movements 
+-- where document @@ to_tsquery('english', 'antonin')
+
+CREATE MATERIALIZED VIEW mv_movements AS
+SELECT 
+  m.id AS mid,
+  p.id AS pid,
+  c.first || ' ' || c.last AS cname,
+  p.title AS ptitle,
+  k.name AS kname,
+  m.title AS mname,
+  to_tsvector('english', c.first) ||
+  to_tsvector('english', c.last) ||
+
+  to_tsvector('english', m.title) ||
+  to_tsvector('english', to_char(m.number, '999')) ||
+
+  to_tsvector('english', p.title) || 
+  to_tsvector('english', to_char(p.number, '999')) ||
+  to_tsvector('english', p.catalog) ||
+
+  to_tsvector('english', k.name) as document
+FROM movements AS m
+JOIN pieces AS p on m.piece = p.id
+JOIN composers AS c on p.composer = c.id
+JOIN keys AS k on p.key = k.id
+;
+CREATE INDEX idx_movement_search ON mv_movements USING gin(document);
+
+-- Create a materialized view for seraching pieces
+CREATE MATERIALIZED VIEW mv_pieces AS
+SELECT 
+  p.id AS pid,
+  c.first || ' ' || c.last AS cname,
+  p.title AS ptitle,
+  k.name AS kname,
+  to_tsvector('english', c.first) ||
+  to_tsvector('english', c.last) ||
+
+  to_tsvector('english', p.title) || 
+  to_tsvector('english', to_char(p.number, '999')) ||
+  to_tsvector('english', p.catalog) ||
+
+  to_tsvector('english', k.name) as document
+FROM pieces AS p
+JOIN composers AS c on p.composer = c.id
+JOIN keys AS k on p.key = k.id
+;
+CREATE INDEX idx_piece_search ON mv_pieces USING gin(document);
 

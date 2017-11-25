@@ -152,41 +152,20 @@ SELECT new_piece(
   ]
 );
 
--- Create a materialized view for seraching movements
--- To update this view use `REFRESH MATERIALIZED VIEW mv_movements`
---
--- searching:
--- select cname, ptitle, kname from mv_movements 
--- where document @@ to_tsquery('english', 'antonin')
+SELECT new_piece(
+  'Antonin', 'Dvorak',
+  'String Quintet',
+  'E Flat Major',
+  3,
+  'Opus 97',
+  ARRAY[
+  'Allegro non tanto',
+  'Allegro vivo',
+  'Larghetto',
+  'Finale. Allegro giusto'
+  ]
+);
 
-CREATE MATERIALIZED VIEW mv_movements AS
-SELECT 
-  m.id AS mid,
-  p.id AS pid,
-  c.last AS cname,
-  p.title AS ptitle,
-  k.name AS kname,
-  m.title AS mname,
-  to_tsvector('english', c.first) ||
-  to_tsvector('english', c.last) ||
-
-  to_tsvector('english', m.title) ||
-  to_tsvector('english', to_char(m.number, '999')) ||
-
-  to_tsvector('english', p.title) || 
-  to_tsvector('english', to_char(p.number, '999')) ||
-  to_tsvector('english', p.catalog) ||
-
-  to_tsvector('english', k.name) as document
-FROM movements AS m
-JOIN pieces AS p on m.piece = p.id
-JOIN composers AS c on p.composer = c.id
-JOIN keys AS k on p.key = k.id
-;
-
---- search index
-CREATE INDEX idx_movement_search ON mv_movements USING 
-gin(document);
   
 
 --- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -199,3 +178,6 @@ INSERT INTO musicians (first, middle, last) values
 ('Tien-Hsin', 'Cindy', 'Wu'),
 ('Orion', NULL, 'Weiss')
 ;
+
+REFRESH MATERIALIZED VIEW mv_movements;
+REFRESH MATERIALIZED VIEW mv_pieces;

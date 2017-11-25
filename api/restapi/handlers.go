@@ -2,9 +2,13 @@ package restapi
 
 import (
 	"log"
+	"strings"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+
+	"database/sql"
+	_ "github.com/lib/pq"
 
 	middleware "github.com/go-openapi/runtime/middleware"
 
@@ -13,7 +17,7 @@ import (
 )
 
 //TODO clearly this needs to hit a memcache and not mongo directly....
-func handleGetPiecesSearch(
+func _handleGetPiecesSearch(
 	params operations.GetPiecesSearchParams,
 ) middleware.Responder {
 	session, err := mgo.Dial("172.17.0.2")
@@ -54,6 +58,58 @@ func handleGetPiecesSearch(
 			return operations.NewGetPiecesSearchInternalServerError()
 		}
 		x.Key = key.Name
+	}
+
+	return operations.NewGetPiecesSearchOK().WithPayload(result)
+}
+
+func handleGetPiecesSearch(
+	params operations.GetPiecesSearchParams,
+) middleware.Responder {
+
+	connStr := "host=172.17.0.2 user=postgres dbname=opus47 sslmode=disable"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Printf("pg-connect error: %v", err)
+		return operations.NewGetPiecesSearchInternalServerError()
+	}
+
+	result := []*models.Piece{}
+
+	if params.Text == nil {
+		return operations.NewGetPiecesSearchOK().WithPayload(result)
+	}
+
+	log.Printf("[Pieces-Search] text: %s", *params.Text)
+
+	// build the search string in the format
+	// one for the rhythm ---> one:*&for:*&the:*&rhythm:*
+	search_string := ""
+	fields := strings.Fields(*params.Text)
+	for i := 0; i < len(fields)-1; i++ {
+		search_string += fields[i] + ":*&"
+	}
+	search_string += fields[len(fields)-1] + ":*"
+	log.Printf("[Pieces-Search] query: %s", search_string)
+
+	rows, err := db.Query(`
+	select pid, cname, ptitle, kname from mv_pieces
+	where document @@ to_tsquery('english', '` + search_string + `')
+	`)
+	if err != nil {
+		log.Printf("pg-querry error: %v", err)
+		return operations.NewGetPiecesSearchInternalServerError()
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		p := &models.Piece{}
+		err := rows.Scan(&p.ID, &p.Composer, &p.Title, &p.Key)
+		if err != nil {
+			log.Printf("pg-scan error: %v", err)
+			return operations.NewGetPiecesSearchInternalServerError()
+		}
+		result = append(result, p)
 	}
 
 	return operations.NewGetPiecesSearchOK().WithPayload(result)
