@@ -638,7 +638,9 @@ definitions:
     properties:
       id:
         type: string #uri
-      name:
+      first:
+        type: string
+      last:
         type: string
 
   Piece:
@@ -647,7 +649,9 @@ definitions:
         type: string #uri
       title:
         type: string
-      composer:
+      cfirst:
+        type: string
+      clast:
         type: string
       key:
         type: string 

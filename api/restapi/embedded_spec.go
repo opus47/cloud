@@ -786,10 +786,13 @@ func init() {
   "definitions": {
     "Composer": {
       "properties": {
+        "first": {
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
-        "name": {
+        "last": {
           "type": "string"
         }
       }
@@ -874,7 +877,10 @@ func init() {
         "catalog": {
           "type": "string"
         },
-        "composer": {
+        "cfirst": {
+          "type": "string"
+        },
+        "clast": {
           "type": "string"
         },
         "id": {

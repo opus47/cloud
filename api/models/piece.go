@@ -19,8 +19,11 @@ type Piece struct {
 	// catalog
 	Catalog string `json:"catalog,omitempty"`
 
-	// composer
-	Composer string `json:"composer,omitempty"`
+	// cfirst
+	Cfirst string `json:"cfirst,omitempty"`
+
+	// clast
+	Clast string `json:"clast,omitempty"`
 
 	// id
 	ID string `json:"id,omitempty"`

@@ -106,20 +106,18 @@ CREATE MATERIALIZED VIEW mv_movements AS
 SELECT 
   m.id AS mid,
   p.id AS pid,
-  c.first || ' ' || c.last AS cname,
+  c.first AS cfirst,
+  c.last AS clast,
   p.title AS ptitle,
   k.name AS kname,
   m.title AS mname,
   to_tsvector('english', c.first) ||
   to_tsvector('english', c.last) ||
-
   to_tsvector('english', m.title) ||
   to_tsvector('english', to_char(m.number, '999')) ||
-
   to_tsvector('english', p.title) || 
   to_tsvector('english', to_char(p.number, '999')) ||
   to_tsvector('english', p.catalog) ||
-
   to_tsvector('english', k.name) as document
 FROM movements AS m
 JOIN pieces AS p on m.piece = p.id
@@ -132,18 +130,17 @@ CREATE INDEX idx_movement_search ON mv_movements USING gin(document);
 CREATE MATERIALIZED VIEW mv_pieces AS
 SELECT 
   p.id AS pid,
-  c.first || ' ' || c.last AS cname,
+  c.first cfirst,
+  c.last clast,
   p.title AS ptitle,
   k.name AS kname,
   p.catalog AS pcatalog,
   to_tsvector('english', unaccent(c.first)) ||
   to_tsvector('english', unaccent(c.last)) ||
-
   to_tsvector('english', p.title) || 
   to_tsvector('english', to_char(p.number, '999')) ||
   to_tsvector('english', p.catalog) ||
-
-  to_tsvector('english', k.name) as document
+  to_tsvector('english', k.name) AS document
 FROM pieces AS p
 JOIN composers AS c on p.composer = c.id
 JOIN keys AS k on p.key = k.id

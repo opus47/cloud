@@ -50,7 +50,7 @@ func handleGetPiecesSearch(
 	log.Printf("[Pieces-Search] query: %s", search_string)
 
 	rows, err := db.Query(`
-	select pid, cname, ptitle, kname, pcatalog from mv_pieces
+	select pid, cfirst, clast, ptitle, kname, pcatalog from mv_pieces
 	where document @@ to_tsquery('english', '` + search_string + `')
 	`)
 	if err != nil {
@@ -61,7 +61,7 @@ func handleGetPiecesSearch(
 	defer rows.Close()
 	for rows.Next() {
 		p := &models.Piece{}
-		err := rows.Scan(&p.ID, &p.Composer, &p.Title, &p.Key, &p.Catalog)
+		err := rows.Scan(&p.ID, &p.Cfirst, &p.Clast, &p.Title, &p.Key, &p.Catalog)
 		if err != nil {
 			log.Printf("pg-scan error: %v", err)
 			return operations.NewGetPiecesSearchInternalServerError()
@@ -117,7 +117,7 @@ func fetchPieceInfo(db *sql.DB, id string) (*models.Piece, middleware.Responder)
 
 	// grab the piece info
 	rows, err := db.Query(`
-		SELECT p.id, c.first || ' ' || c.last, p.title, k.name, p.catalog
+		SELECT p.id, c.first, c.last, p.title, k.name, p.catalog
 		FROM pieces AS p
 		JOIN composers AS c on p.composer = c.id
 		JOIN keys AS k on p.key = k.id
@@ -138,7 +138,8 @@ func fetchPieceInfo(db *sql.DB, id string) (*models.Piece, middleware.Responder)
 	result := &models.Piece{}
 	err = rows.Scan(
 		&result.ID,
-		&result.Composer,
+		&result.Cfirst,
+		&result.Clast,
 		&result.Title,
 		&result.Key,
 		&result.Catalog,

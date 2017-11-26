@@ -16,11 +16,14 @@ import (
 // swagger:model Composer
 type Composer struct {
 
+	// first
+	First string `json:"first,omitempty"`
+
 	// id
 	ID string `json:"id,omitempty"`
 
-	// name
-	Name string `json:"name,omitempty"`
+	// last
+	Last string `json:"last,omitempty"`
 }
 
 // Validate validates this composer
