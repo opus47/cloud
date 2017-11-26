@@ -227,7 +227,11 @@ SELECT new_piece(
 
 INSERT INTO musicians (first, middle, last) values
 ('Tien-Hsin', 'Cindy', 'Wu'),
-('Orion', NULL, 'Weiss')
+('Orion', NULL, 'Weiss'),
+('Jessica', NULL, 'Lee'),
+('Che-Yen', 'Brian', 'Chen'),
+('Nicholas', NULL, 'Canellakis'),
+('Dimitri', NULL, 'Murrath')
 ;
 
 REFRESH MATERIALIZED VIEW mv_movements;
