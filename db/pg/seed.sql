@@ -96,10 +96,12 @@ CREATE FUNCTION new_piece(
   pkey text, 
   pnumber integer, 
   pcatalog text,
-  pmovements text[]
+  pmovements text[],
+  pparts text[]
 ) RETURNS void AS $$
 DECLARE
   n_movements integer := array_length(pmovements, 1);
+  n_parts integer := array_length(pparts, 1);
   composer_id UUID;
   key_id UUID;
   piece_id UUID;
@@ -122,6 +124,12 @@ BEGIN
     INSERT INTO movements (piece, title, number) values
     (piece_id, pmovements[i], i);
   END LOOP;
+
+  FOR i IN 1..n_parts
+  LOOP
+    INSERT INTO piece_parts (piece, part) values
+    (piece_id, (select id from parts where name ilike pparts[i]));
+  END LOOP;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -132,16 +140,22 @@ SELECT new_piece(
   2,
   'Opus 26',
   ARRAY[
-  'Allegro non troppo',
-  'Poco adagio',
-  'Scherzo. Poco Allegro -Trio',
-  'Finale. Allegro'
+    'Allegro non troppo',
+    'Poco adagio',
+    'Scherzo. Poco Allegro -Trio',
+    'Finale. Allegro'
+  ],
+  Array[
+    'Violin',
+    'Viola',
+    'Cello',
+    'Piano'
   ]
 );
 
 SELECT new_piece(
   'Antonin', 'Dvorak',
-  'String Quintet',
+  'String Quartet',
   'F Major',
   12,
   'Opus 96',
@@ -150,6 +164,12 @@ SELECT new_piece(
   'Lento',
   'Molto vivace',
   'Finale. Vivace ma non troppo'
+  ],
+  Array[
+    'Violin 1',
+    'Violin 2',
+    'Viola',
+    'Cello'
   ]
 );
 
@@ -160,27 +180,40 @@ SELECT new_piece(
   3,
   'Opus 97',
   ARRAY[
-  'Allegro non tanto',
-  'Allegro vivo',
-  'Larghetto',
-  'Finale. Allegro giusto'
+    'Allegro non tanto',
+    'Allegro vivo',
+    'Larghetto',
+    'Finale. Allegro giusto'
+  ],
+  Array[
+    'Violin 1',
+    'Violin 2',
+    'Viola 1',
+    'Viola 2',
+    'Cello'
   ]
 );
 
 SELECT new_piece(
   'Ludwig', 'Beethoven',
-  'String Quintet',
+  'String Quartet',
   'C Sharp Minor',
   14,
   'Opus 131',
   ARRAY[
-  'Adagio ma non troppo e molto espressivo',
-  'Allegro molto vivace',
-  'Allegro moderato',
-  'Andante ma non troppo e molto cantabile',
-  'Presto',
-  'Adagio quasi un poco andante',
-  'Allegro'
+    'Adagio ma non troppo e molto espressivo',
+    'Allegro molto vivace',
+    'Allegro moderato',
+    'Andante ma non troppo e molto cantabile',
+    'Presto',
+    'Adagio quasi un poco andante',
+    'Allegro'
+  ],
+  ARRAY[
+    'Violin 1',
+    'Violin 2',
+    'Viola',
+    'Cello'
   ]
 );
 

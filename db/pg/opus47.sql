@@ -51,11 +51,11 @@ CREATE TABLE parts (
   UNIQUE(name)
 );
 
-CREATE TABLE movement_parts (
-  movement  UUID  REFERENCES movements NOT NULL,
+CREATE TABLE piece_parts (
+  piece     UUID  REFERENCES pieces NOT NULL,
   part      UUID  REFERENCES parts NOT NULL,
 
-  UNIQUE(movement, part)
+  UNIQUE(piece, part)
 );
 
 ---

@@ -108,6 +108,13 @@ func handleGetPiecesId(
 	}
 	piece.Movements = movements
 
+	//get part info
+	parts, errx := fetchPieceParts(db, params.ID)
+	if errx != nil {
+		return errx
+	}
+	piece.Parts = parts
+
 	// finito
 	return operations.NewGetPiecesIDOK().WithPayload(piece)
 
@@ -180,6 +187,38 @@ func fetchPieceMovements(db *sql.DB, id string) ([]*models.Movement, middleware.
 		}
 
 		result = append(result, m)
+	}
+
+	return result, nil
+
+}
+
+func fetchPieceParts(db *sql.DB, id string) ([]*models.Part, middleware.Responder) {
+
+	rows, err := db.Query(`
+		SELECT p.id, p.name
+		FROM parts as p
+		JOIN piece_parts as pp on pp.part = p.id
+		WHERE pp.piece = '` + id + `'
+	`)
+
+	if err != nil {
+		log.Printf("pg-query error: %v", err)
+		return nil, operations.NewGetPiecesIDInternalServerError()
+	}
+	defer rows.Close()
+
+	result := []*models.Part{}
+	for rows.Next() {
+		p := &models.Part{}
+		err := rows.Scan(&p.ID, &p.Name)
+
+		if err != nil {
+			log.Printf("pg-scan error: %v", err)
+			return nil, operations.NewGetPiecesIDInternalServerError()
+		}
+
+		result = append(result, p)
 	}
 
 	return result, nil
