@@ -4,9 +4,6 @@ import (
 	"log"
 	"strings"
 
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
-
 	"database/sql"
 	_ "github.com/lib/pq"
 
@@ -16,58 +13,17 @@ import (
 	"github.com/opus47/cloud/api/restapi/operations"
 )
 
-//TODO clearly this needs to hit a memcache and not mongo directly....
-func _handleGetPiecesSearch(
-	params operations.GetPiecesSearchParams,
-) middleware.Responder {
-	session, err := mgo.Dial("172.17.0.2")
-	if err != nil {
-		log.Printf("dial error: %v", err)
-		return operations.NewGetPiecesSearchInternalServerError()
-	}
-	defer session.Close()
+const connStr string = "host=172.17.0.2 user=postgres dbname=opus47 sslmode=disable"
 
-	session.SetMode(mgo.Monotonic, true)
-	pc := session.DB("opus47").C("pieces")
-	result := []*models.Piece{}
-	err = pc.Find(bson.M{}).All(&result)
-	if err != nil {
-		log.Printf("find error: %v", err)
-		return operations.NewGetPiecesSearchInternalServerError()
-	}
-
-	//resolve composers
-	cc := session.DB("opus47").C("composers")
-	for _, x := range result {
-		composer := models.Composer{}
-		err = cc.Find(bson.M{"@id": x.Composer}).One(&composer)
-		if err != nil {
-			log.Printf("find composer error: %s - %v", x.Composer, err)
-			return operations.NewGetPiecesSearchInternalServerError()
-		}
-		x.Composer = composer.Name
-	}
-
-	//resolve keys
-	kc := session.DB("opus47").C("keys")
-	for _, x := range result {
-		key := models.Key{}
-		err = kc.Find(bson.M{"@id": x.Key}).One(&key)
-		if err != nil {
-			log.Printf("find key error: %s - %v", x.Key, err)
-			return operations.NewGetPiecesSearchInternalServerError()
-		}
-		x.Key = key.Name
-	}
-
-	return operations.NewGetPiecesSearchOK().WithPayload(result)
-}
-
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// GET /pieces/search
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func handleGetPiecesSearch(
 	params operations.GetPiecesSearchParams,
 ) middleware.Responder {
 
-	connStr := "host=172.17.0.2 user=postgres dbname=opus47 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Printf("pg-connect error: %v", err)
@@ -114,4 +70,117 @@ func handleGetPiecesSearch(
 	}
 
 	return operations.NewGetPiecesSearchOK().WithPayload(result)
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// GET /pieces/{id}
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func handleGetPiecesId(
+	params operations.GetPiecesIDParams,
+) middleware.Responder {
+
+	// check args
+	if params.ID == "" {
+		log.Printf("[get-pieces]: no id provided")
+		return operations.NewGetPiecesIDBadRequest()
+	}
+
+	// init db connection
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Printf("pg-connect error: %v", err)
+		return operations.NewGetPiecesIDInternalServerError()
+	}
+	defer db.Close()
+
+	// get piece info
+	piece, errx := fetchPieceInfo(db, params.ID)
+	if errx != nil {
+		return errx
+	}
+
+	//get movement info
+	movements, errx := fetchPieceMovements(db, params.ID)
+	if errx != nil {
+		return errx
+	}
+	piece.Movements = movements
+
+	// finito
+	return operations.NewGetPiecesIDOK().WithPayload(piece)
+
+}
+
+func fetchPieceInfo(db *sql.DB, id string) (*models.Piece, middleware.Responder) {
+
+	// grab the piece info
+	rows, err := db.Query(`
+		SELECT p.id, c.first || ' ' || c.last, p.title, k.name, p.catalog
+		FROM pieces AS p
+		JOIN composers AS c on p.composer = c.id
+		JOIN keys AS k on p.key = k.id
+		WHERE p.id = '` + id + `'
+	`)
+
+	if err != nil {
+		log.Printf("pg-query error: %v", err)
+		return nil, operations.NewGetPiecesIDInternalServerError()
+	}
+	defer rows.Close()
+
+	if !rows.Next() {
+		log.Printf("pg-query error: %v key not found", id)
+		return nil, operations.NewGetPiecesIDBadRequest()
+	}
+
+	result := &models.Piece{}
+	err = rows.Scan(
+		&result.ID,
+		&result.Composer,
+		&result.Title,
+		&result.Key,
+		&result.Catalog,
+	)
+	if err != nil {
+		log.Printf("pg-scan error: %v", err)
+		return nil, operations.NewGetPiecesIDInternalServerError()
+	}
+
+	return result, nil
+
+}
+
+func fetchPieceMovements(db *sql.DB, id string) ([]*models.Movement, middleware.Responder) {
+
+	rows, err := db.Query(`
+		SELECT m.id, m.title, m.number
+		FROM movements AS m
+		JOIN pieces AS p on m.piece = p.id
+		WHERE p.id = '` + id + `'
+		ORDER BY m.number
+	`)
+
+	if err != nil {
+		log.Printf("pg-query error: %v", err)
+		return nil, operations.NewGetPiecesIDInternalServerError()
+	}
+	defer rows.Close()
+
+	result := []*models.Movement{}
+	for rows.Next() {
+		m := &models.Movement{}
+		err := rows.Scan(&m.ID, &m.Title, &m.Number)
+
+		if err != nil {
+			log.Printf("pg-scan error: %v", err)
+			return nil, operations.NewGetPiecesIDInternalServerError()
+		}
+
+		result = append(result, m)
+	}
+
+	return result, nil
+
 }

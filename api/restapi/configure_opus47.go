@@ -90,9 +90,8 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 	api.GetPiecesHandler = operations.GetPiecesHandlerFunc(func(params operations.GetPiecesParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetPieces has not yet been implemented")
 	})
-	api.GetPiecesIDHandler = operations.GetPiecesIDHandlerFunc(func(params operations.GetPiecesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetPiecesID has not yet been implemented")
-	})
+
+	api.GetPiecesIDHandler = operations.GetPiecesIDHandlerFunc(handleGetPiecesId)
 
 	api.GetPiecesSearchHandler = operations.GetPiecesSearchHandlerFunc(handleGetPiecesSearch)
 

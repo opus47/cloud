@@ -55,3 +55,49 @@ func (o *GetPiecesIDOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 		}
 	}
 }
+
+// GetPiecesIDBadRequestCode is the HTTP code returned for type GetPiecesIDBadRequest
+const GetPiecesIDBadRequestCode int = 400
+
+/*GetPiecesIDBadRequest Bad Request
+
+swagger:response getPiecesIdBadRequest
+*/
+type GetPiecesIDBadRequest struct {
+}
+
+// NewGetPiecesIDBadRequest creates GetPiecesIDBadRequest with default headers values
+func NewGetPiecesIDBadRequest() *GetPiecesIDBadRequest {
+	return &GetPiecesIDBadRequest{}
+}
+
+// WriteResponse to the client
+func (o *GetPiecesIDBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(400)
+}
+
+// GetPiecesIDInternalServerErrorCode is the HTTP code returned for type GetPiecesIDInternalServerError
+const GetPiecesIDInternalServerErrorCode int = 500
+
+/*GetPiecesIDInternalServerError Internal Error
+
+swagger:response getPiecesIdInternalServerError
+*/
+type GetPiecesIDInternalServerError struct {
+}
+
+// NewGetPiecesIDInternalServerError creates GetPiecesIDInternalServerError with default headers values
+func NewGetPiecesIDInternalServerError() *GetPiecesIDInternalServerError {
+	return &GetPiecesIDInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetPiecesIDInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
+}

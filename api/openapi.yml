@@ -152,6 +152,10 @@ paths:
           description: Piece information
           schema:
             $ref: '#/definitions/Piece'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Error
 
     put:
       summary: Add or update a piece

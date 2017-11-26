@@ -607,6 +607,12 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Piece"
             }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Error"
           }
         }
       },
