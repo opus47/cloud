@@ -822,10 +822,16 @@ func init() {
     },
     "Musician": {
       "properties": {
+        "first": {
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
-        "name": {
+        "last": {
+          "type": "string"
+        },
+        "middle": {
           "type": "string"
         }
       }

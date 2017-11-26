@@ -224,3 +224,45 @@ func fetchPieceParts(db *sql.DB, id string) ([]*models.Part, middleware.Responde
 	return result, nil
 
 }
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// GET /musicians
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func handleGetMusicians(
+	params operations.GetMusiciansParams,
+) middleware.Responder {
+
+	// init db connection
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Printf("pg-connect error: %v", err)
+		return operations.NewGetPiecesIDInternalServerError()
+	}
+	defer db.Close()
+
+	rows, err := db.Query(`
+		SELECT id, first, COALESCE(middle, ''), last
+		FROM musicians
+	`)
+	if err != nil {
+		log.Printf("pg-query error: %v", err)
+		return operations.NewGetPiecesIDInternalServerError()
+	}
+	defer rows.Close()
+
+	result := []*models.Musician{}
+	for rows.Next() {
+		m := &models.Musician{}
+		err = rows.Scan(&m.ID, &m.First, &m.Middle, &m.Last)
+		if err != nil {
+			log.Printf("pg-scan error: %v", err)
+			return operations.NewGetPiecesIDInternalServerError()
+		}
+		result = append(result, m)
+	}
+
+	return operations.NewGetMusiciansOK().WithPayload(result)
+
+}

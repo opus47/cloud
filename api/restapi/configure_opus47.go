@@ -69,9 +69,9 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 	api.GetKeysIDHandler = operations.GetKeysIDHandlerFunc(func(params operations.GetKeysIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetKeysID has not yet been implemented")
 	})
-	api.GetMusiciansHandler = operations.GetMusiciansHandlerFunc(func(params operations.GetMusiciansParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetMusicians has not yet been implemented")
-	})
+
+	api.GetMusiciansHandler = operations.GetMusiciansHandlerFunc(handleGetMusicians)
+
 	api.GetMusiciansIDHandler = operations.GetMusiciansIDHandlerFunc(func(params operations.GetMusiciansIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetMusiciansID has not yet been implemented")
 	})

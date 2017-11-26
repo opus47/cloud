@@ -719,7 +719,11 @@ definitions:
     properties:
       id:
         type: string #uri
-      name:
+      first:
+        type: string
+      middle:
+        type: string
+      last:
         type: string
 
   Recording:

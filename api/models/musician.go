@@ -16,11 +16,17 @@ import (
 // swagger:model Musician
 type Musician struct {
 
+	// first
+	First string `json:"first,omitempty"`
+
 	// id
 	ID string `json:"id,omitempty"`
 
-	// name
-	Name string `json:"name,omitempty"`
+	// last
+	Last string `json:"last,omitempty"`
+
+	// middle
+	Middle string `json:"middle,omitempty"`
 }
 
 // Validate validates this musician
