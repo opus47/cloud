@@ -28,6 +28,9 @@ type Performance struct {
 	// performers
 	Performers PerformancePerformers `json:"performers"`
 
+	// recordings
+	Recordings PerformanceRecordings `json:"recordings"`
+
 	// venue
 	Venue string `json:"venue,omitempty"`
 }

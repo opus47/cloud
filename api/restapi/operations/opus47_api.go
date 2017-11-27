@@ -92,6 +92,9 @@ func NewOpus47API(spec *loads.Document) *Opus47API {
 		GetPiecesIDHandler: GetPiecesIDHandlerFunc(func(params GetPiecesIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPiecesID has not yet been implemented")
 		}),
+		GetPiecesIDPerformancesHandler: GetPiecesIDPerformancesHandlerFunc(func(params GetPiecesIDPerformancesParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetPiecesIDPerformances has not yet been implemented")
+		}),
 		GetPiecesSearchHandler: GetPiecesSearchHandlerFunc(func(params GetPiecesSearchParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPiecesSearch has not yet been implemented")
 		}),
@@ -189,6 +192,8 @@ type Opus47API struct {
 	GetPiecesHandler GetPiecesHandler
 	// GetPiecesIDHandler sets the operation handler for the get pieces ID operation
 	GetPiecesIDHandler GetPiecesIDHandler
+	// GetPiecesIDPerformancesHandler sets the operation handler for the get pieces ID performances operation
+	GetPiecesIDPerformancesHandler GetPiecesIDPerformancesHandler
 	// GetPiecesSearchHandler sets the operation handler for the get pieces search operation
 	GetPiecesSearchHandler GetPiecesSearchHandler
 	// GetRecordingsHandler sets the operation handler for the get recordings operation
@@ -346,6 +351,10 @@ func (o *Opus47API) Validate() error {
 
 	if o.GetPiecesIDHandler == nil {
 		unregistered = append(unregistered, "GetPiecesIDHandler")
+	}
+
+	if o.GetPiecesIDPerformancesHandler == nil {
+		unregistered = append(unregistered, "GetPiecesIDPerformancesHandler")
 	}
 
 	if o.GetPiecesSearchHandler == nil {
@@ -572,6 +581,11 @@ func (o *Opus47API) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/pieces/{id}"] = NewGetPiecesID(o.context, o.GetPiecesIDHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/pieces/{id}/performances"] = NewGetPiecesIDPerformances(o.context, o.GetPiecesIDPerformancesHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

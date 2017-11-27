@@ -16,6 +16,9 @@ import (
 // swagger:model Performer
 type Performer struct {
 
+	// id
+	ID string `json:"id,omitempty"`
+
 	// musician
 	Musician string `json:"musician,omitempty"`
 

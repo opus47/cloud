@@ -23,7 +23,10 @@ type Recording struct {
 	ID string `json:"id,omitempty"`
 
 	// movement
-	Movement int64 `json:"movement,omitempty"`
+	Movement string `json:"movement,omitempty"`
+
+	// number
+	Number int64 `json:"number,omitempty"`
 
 	// performance
 	Performance string `json:"performance,omitempty"`

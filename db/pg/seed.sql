@@ -231,8 +231,95 @@ INSERT INTO musicians (first, middle, last) values
 ('Jessica', NULL, 'Lee'),
 ('Che-Yen', 'Brian', 'Chen'),
 ('Nicholas', NULL, 'Canellakis'),
-('Dimitri', NULL, 'Murrath')
+('Dimitri', NULL, 'Murrath'),
+('Alan', NULL, 'Iglitzin'),
+('Matthew', NULL, 'Zalkind')
 ;
 
 REFRESH MATERIALIZED VIEW mv_movements;
 REFRESH MATERIALIZED VIEW mv_pieces;
+
+--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---
+--- Performances
+---
+--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+INSERT INTO performances (piece, title) values
+(
+  (SELECT id FROM pieces WHERE catalog = 'Opus 131'), 
+  'Olympic Music Festival 2014'
+);
+
+INSERT INTO performers (performance, musician, part) values
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM musicians WHERE first = 'Jessica'),
+  (SELECT id FROM parts where name = 'Violin 1')
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM musicians WHERE first = 'Tien-Hsin'),
+  (SELECT id FROM parts where name = 'Violin 2')
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM musicians WHERE first = 'Alan'),
+  (SELECT id FROM parts where name = 'Viola')
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM musicians WHERE first = 'Matthew'),
+  (SELECT id FROM parts where name = 'Cello')
+);
+
+INSERT INTO recordings (performance, movement, file) values
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Adagio ma non troppo e molto espressivo'),
+  'ce3a4dc-1.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Allegro molto vivace'),
+  'ce3a4dc-2.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Allegro moderato'),
+  'ce3a4dc-3.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Andante ma non troppo e molto cantabile'),
+  'ce3a4dc-4.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Presto'),
+  'ce3a4dc-5.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Adagio quasi un poco andante'),
+  'ce3a4dc-6.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%olympic%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Allegro'),
+  'ce3a4dc-7.flac'
+);

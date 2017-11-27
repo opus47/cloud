@@ -680,6 +680,37 @@ func init() {
         }
       }
     },
+    "/pieces/{id}/performances": {
+      "get": {
+        "description": "Get all the performances of a piece",
+        "summary": "Get all the performances of a piece",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece information",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Performance"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
     "/recordings": {
       "get": {
         "description": "List recordings",
@@ -863,6 +894,12 @@ func init() {
             "$ref": "#/definitions/Performer"
           }
         },
+        "recordings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Recording"
+          }
+        },
         "venue": {
           "type": "string"
         }
@@ -870,6 +907,9 @@ func init() {
     },
     "Performer": {
       "properties": {
+        "id": {
+          "type": "string"
+        },
         "musician": {
           "type": "string"
         },
@@ -921,6 +961,9 @@ func init() {
           "type": "string"
         },
         "movement": {
+          "type": "string"
+        },
+        "number": {
           "type": "integer"
         },
         "performance": {

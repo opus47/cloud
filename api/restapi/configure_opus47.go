@@ -4,11 +4,13 @@ package restapi
 
 import (
 	"crypto/tls"
+	"log"
 	"net/http"
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
+	cors "github.com/rs/cors"
 	graceful "github.com/tylerb/graceful"
 
 	"github.com/opus47/cloud/api/restapi/operations"
@@ -95,6 +97,10 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 
 	api.GetPiecesSearchHandler = operations.GetPiecesSearchHandlerFunc(handleGetPiecesSearch)
 
+	api.GetPiecesIDPerformancesHandler = operations.GetPiecesIDPerformancesHandlerFunc(
+		handleGetPiecePerformances,
+	)
+
 	api.GetRecordingsHandler = operations.GetRecordingsHandlerFunc(func(params operations.GetRecordingsParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetRecordings has not yet been implemented")
 	})
@@ -146,8 +152,25 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 	return handler
 }
 
+type Logger struct {
+	handler http.Handler
+}
+
+func (l Logger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s %s", r.Method, r.URL.Path)
+	l.handler.ServeHTTP(w, r)
+}
+
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedHeaders:   []string{"*"},
+		AllowedMethods:   []string{"GET", "PUT", "POST", "DELETE"},
+		AllowCredentials: true,
+	})
+
+	return c.Handler(Logger{handler})
 	return handler
 }

@@ -266,3 +266,107 @@ func handleGetMusicians(
 	return operations.NewGetMusiciansOK().WithPayload(result)
 
 }
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// GET /pieces/{id}/performances
+///
+/// Get all the performances for the Piece identified by {id}
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func handleGetPiecePerformances(
+	params operations.GetPiecesIDPerformancesParams,
+) middleware.Responder {
+
+	// init db connection
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Printf("pg-connect error: %v", err)
+		return operations.NewGetPiecesIDInternalServerError()
+	}
+	defer db.Close()
+
+	rows, err := db.Query(`
+		SELECT id, title
+		FROM performances
+		WHERE piece = '` + params.ID + `'
+	`)
+	if err != nil {
+		log.Printf("pg-query error: %v", err)
+		return operations.NewGetPiecesIDInternalServerError()
+	}
+	defer rows.Close()
+
+	// get top level performance information
+	result := []*models.Performance{}
+	for rows.Next() {
+		p := &models.Performance{}
+		err = rows.Scan(&p.ID, &p.Venue)
+		if err != nil {
+			log.Printf("[performance] pg-scan error: %v", err)
+			return operations.NewGetPiecesIDInternalServerError()
+		}
+		result = append(result, p)
+	}
+	rows.Close()
+
+	// get performer information
+	for _, p := range result {
+
+		rows, err := db.Query(`
+			SELECT m.id, m.first, m.last, p.name
+			FROM performers as x
+			JOIN musicians as m on x.musician = m.id
+			JOIN parts as p on x.part = p.id
+			WHERE performance = '` + p.ID + `'
+		`)
+		if err != nil {
+			log.Printf("[performance-performers] pg-query error: %v", err)
+			return operations.NewGetPiecesIDInternalServerError()
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			x := &models.Performer{}
+			var mfirst, mlast string
+			err := rows.Scan(&x.ID, &mfirst, &mlast, &x.Part)
+			if err != nil {
+				log.Printf("[performance-performers] pg-scan error: %v", err)
+				return operations.NewGetPiecesIDInternalServerError()
+			}
+			x.Musician = mfirst + " " + mlast
+			p.Performers = append(p.Performers, x)
+		}
+	}
+
+	// get recording information
+	for _, p := range result {
+
+		rows, err := db.Query(`
+			SELECT r.id, r.file, m.title, m.number
+			FROM recordings as r
+			JOIN movements as m on r.movement = m.id
+			WHERE r.performance = '` + p.ID + `'
+			ORDER BY m.number
+		`)
+		if err != nil {
+			log.Printf("pg-query error: %v", err)
+			return operations.NewGetPiecesIDInternalServerError()
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			x := &models.Recording{}
+			err := rows.Scan(&x.ID, &x.File, &x.Movement, &x.Number)
+			if err != nil {
+				log.Printf("[performance-recordings] pg-scan error: %v", err)
+				return operations.NewGetPiecesIDInternalServerError()
+			}
+			p.Recordings = append(p.Recordings, x)
+		}
+
+	}
+
+	return operations.NewGetPiecesIDPerformancesOK().WithPayload(result)
+
+}
