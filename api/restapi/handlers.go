@@ -319,6 +319,7 @@ func handleGetPiecePerformances(
 			JOIN musicians as m on x.musician = m.id
 			JOIN parts as p on x.part = p.id
 			WHERE performance = '` + p.ID + `'
+			ORDER BY p.rank
 		`)
 		if err != nil {
 			log.Printf("[performance-performers] pg-query error: %v", err)

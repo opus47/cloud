@@ -58,29 +58,29 @@ INSERT INTO keys (name) values
 ---
 --- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-INSERT INTO parts (name) values
-('Violin'),
-('Violin 1'),
-('Violin 2'),
-('Violin 3'),
-('Violin 4'),
-('Viola'),
-('Viola 1'),
-('Viola 2'),
-('Viola 3'),
-('Viola 4'),
-('Cello'),
-('Cello 1'),
-('Cello 2'),
-('Piano'),
-('Piano 1'),
-('Piano 2'),
-('Flute'),
-('Harp'),
-('Clarinet'),
-('Oboe'),
-('Horn'),
-('Bass')
+INSERT INTO parts (name, rank) values
+('Violin', 1),
+('Violin 1', 2),
+('Violin 2', 3),
+('Violin 3', 4),
+('Violin 4', 5),
+('Viola', 6),
+('Viola 1', 7),
+('Viola 2', 8),
+('Viola 3', 9),
+('Viola 4', 10),
+('Cello', 11),
+('Cello 1', 12),
+('Cello 2', 13),
+('Piano', 14),
+('Piano 1', 15),
+('Piano 2', 16),
+('Flute', 17),
+('Harp', 18),
+('Clarinet', 19),
+('Oboe', 20),
+('Horn', 21),
+('Bass', 22)
 ;
 
 --- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -245,6 +245,9 @@ REFRESH MATERIALIZED VIEW mv_pieces;
 ---
 --- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+-- Beethoven Opus 131 Oly ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 INSERT INTO performances (piece, title) values
 (
   (SELECT id FROM pieces WHERE catalog = 'Opus 131'), 
@@ -322,4 +325,86 @@ INSERT INTO recordings (performance, movement, file) values
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
     title = 'Allegro'),
   'ce3a4dc-7.flac'
+);
+
+
+-- Beethoven Opus 131 Oly ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+INSERT INTO performances (piece, title) values
+(
+  (SELECT id FROM pieces WHERE catalog = 'Opus 131'), 
+  'Santa Fe Chamber Music Festival 2007'
+);
+
+INSERT INTO performers (performance, musician, part) values
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM musicians WHERE first = 'Tien-Hsin'),
+  (SELECT id FROM parts where name = 'Violin 1')
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM musicians WHERE first = 'Jessica'),
+  (SELECT id FROM parts where name = 'Violin 2')
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM musicians WHERE first = 'Che-Yen'),
+  (SELECT id FROM parts where name = 'Viola')
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM musicians WHERE first = 'Nicholas'),
+  (SELECT id FROM parts where name = 'Cello')
+);
+
+INSERT INTO recordings (performance, movement, file) values
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Adagio ma non troppo e molto espressivo'),
+  'be3a4dc-1.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Allegro molto vivace'),
+  'be3a4dc-2.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Allegro moderato'),
+  'be3a4dc-3.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Andante ma non troppo e molto cantabile'),
+  'be3a4dc-4.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Presto'),
+  'be3a4dc-5.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Adagio quasi un poco andante'),
+  'be3a4dc-6.flac'
+),
+(
+  (SELECT id FROM performances WHERE title ilike '%santa%'),
+  (SELECT id FROM movements WHERE 
+    piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
+    title = 'Allegro'),
+  'be3a4dc-7.flac'
 );

@@ -47,6 +47,7 @@ CREATE TABLE movements (
 CREATE TABLE parts (
   id    UUID  PRIMARY KEY DEFAULT gen_random_uuid(),
   name  text  NOT NULL,
+  rank  integer NOT NULL,
 
   UNIQUE(name)
 );
