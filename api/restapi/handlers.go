@@ -13,7 +13,7 @@ import (
 	"github.com/opus47/cloud/api/restapi/operations"
 )
 
-const connStr string = "host=172.17.0.2 user=postgres dbname=opus47 sslmode=disable"
+const connStr string = "host=172.17.0.3 user=postgres dbname=opus47 sslmode=disable"
 
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
