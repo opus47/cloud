@@ -393,6 +393,8 @@ func handlePutPieces(
 		return operations.NewPutPiecesBadRequest()
 	}
 
+	log.Printf("%#v", params.Data)
+
 	movements := []string{}
 	for _, x := range params.Data.Movements {
 		movements = append(movements, x.Title)
