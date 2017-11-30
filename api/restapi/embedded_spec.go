@@ -38,6 +38,7 @@ func init() {
       "get": {
         "description": "List composers",
         "summary": "List composers",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of composers",
@@ -55,6 +56,7 @@ func init() {
       "get": {
         "description": "Get composer information",
         "summary": "Get composer information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -75,6 +77,7 @@ func init() {
       "put": {
         "description": "Add or update a composer",
         "summary": "Add or update a composer",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -111,6 +114,7 @@ func init() {
       "delete": {
         "description": "Delete a composer",
         "summary": "Delete a composer",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -140,6 +144,7 @@ func init() {
       "get": {
         "description": "List keys",
         "summary": "List keys",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of keys",
@@ -157,6 +162,7 @@ func init() {
       "get": {
         "description": "Get key information",
         "summary": "Get key information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -177,6 +183,7 @@ func init() {
       "put": {
         "description": "Add or update a key",
         "summary": "Add or update a key",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -213,6 +220,7 @@ func init() {
       "delete": {
         "description": "Delete a key",
         "summary": "Delete a key",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -242,6 +250,7 @@ func init() {
       "get": {
         "description": "List musicians",
         "summary": "List musicians",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of musicians",
@@ -259,6 +268,7 @@ func init() {
       "get": {
         "description": "Get musician information",
         "summary": "Get musician information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -279,6 +289,7 @@ func init() {
       "put": {
         "description": "Add or update a musician",
         "summary": "Add or update a musician",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -315,6 +326,7 @@ func init() {
       "delete": {
         "description": "Delete a musician",
         "summary": "Delete a musician",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -344,6 +356,7 @@ func init() {
       "get": {
         "description": "List parts",
         "summary": "List parts",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of parts",
@@ -361,6 +374,7 @@ func init() {
       "get": {
         "description": "Get part information",
         "summary": "Get part information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -381,6 +395,7 @@ func init() {
       "put": {
         "description": "Add or update a part",
         "summary": "Add or update a part",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -417,6 +432,7 @@ func init() {
       "delete": {
         "description": "Delete a part",
         "summary": "Delete a part",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -446,6 +462,7 @@ func init() {
       "get": {
         "description": "List performances",
         "summary": "List performances",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of performances",
@@ -463,6 +480,7 @@ func init() {
       "get": {
         "description": "Get performance information",
         "summary": "Get performance information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -483,6 +501,7 @@ func init() {
       "put": {
         "description": "Add or update a performance",
         "summary": "Add or update a performance",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -519,6 +538,7 @@ func init() {
       "delete": {
         "description": "Delete a performance",
         "summary": "Delete a performance",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -548,6 +568,7 @@ func init() {
       "get": {
         "description": "List pieces",
         "summary": "List pieces",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of pieces",
@@ -559,12 +580,43 @@ func init() {
             }
           }
         }
+      },
+      "put": {
+        "description": "Add or update a piece",
+        "summary": "Add or update a piece",
+        "security": null,
+        "parameters": [
+          {
+            "description": "The piece to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Piece"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece updated"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
       }
     },
     "/pieces/search": {
       "get": {
         "description": "Search pieces",
         "summary": "Search pieces",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -593,6 +645,7 @@ func init() {
       "get": {
         "description": "Get pieces information",
         "summary": "Get piece information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -616,9 +669,10 @@ func init() {
           }
         }
       },
-      "put": {
-        "description": "Add or update a piece",
-        "summary": "Add or update a piece",
+      "post": {
+        "description": "Update a piece",
+        "summary": "Update a piece",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -655,6 +709,7 @@ func init() {
       "delete": {
         "description": "Delete a piece",
         "summary": "Delete a piece",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -684,6 +739,7 @@ func init() {
       "get": {
         "description": "Get all the performances of a piece",
         "summary": "Get all the performances of a piece",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -715,6 +771,7 @@ func init() {
       "get": {
         "description": "List recordings",
         "summary": "List recordings",
+        "security": null,
         "responses": {
           "200": {
             "description": "List of recordings",
@@ -732,6 +789,7 @@ func init() {
       "get": {
         "description": "Get recording information",
         "summary": "Get recording information",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -752,6 +810,7 @@ func init() {
       "put": {
         "description": "Add or update a recording",
         "summary": "Add or update a recording",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -788,6 +847,7 @@ func init() {
       "delete": {
         "description": "Delete a recording",
         "summary": "Delete a recording",
+        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -940,6 +1000,9 @@ func init() {
           "items": {
             "$ref": "#/definitions/Movement"
           }
+        },
+        "number": {
+          "type": "integer"
         },
         "parts": {
           "type": "array",

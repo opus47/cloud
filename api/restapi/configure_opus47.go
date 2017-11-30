@@ -101,6 +101,8 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 		handleGetPiecePerformances,
 	)
 
+	api.PutPiecesHandler = operations.PutPiecesHandlerFunc(handlePutPieces)
+
 	api.GetRecordingsHandler = operations.GetRecordingsHandlerFunc(func(params operations.GetRecordingsParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetRecordings has not yet been implemented")
 	})
@@ -122,8 +124,8 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 	api.PutPerformancesIDHandler = operations.PutPerformancesIDHandlerFunc(func(params operations.PutPerformancesIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .PutPerformancesID has not yet been implemented")
 	})
-	api.PutPiecesIDHandler = operations.PutPiecesIDHandlerFunc(func(params operations.PutPiecesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutPiecesID has not yet been implemented")
+	api.PostPiecesIDHandler = operations.PostPiecesIDHandlerFunc(func(params operations.PostPiecesIDParams) middleware.Responder {
+		return middleware.NotImplemented("operation .PostPiecesID has not yet been implemented")
 	})
 	api.PutRecordingsIDHandler = operations.PutRecordingsIDHandlerFunc(func(params operations.PutRecordingsIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .PutRecordingsID has not yet been implemented")

@@ -116,6 +116,26 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Piece'
+    put:
+      summary: Add or update a piece
+      description: Add or update a piece
+      parameters:
+        - name: data
+          description: The piece to add or update
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Piece'
+
+      responses:
+        '200':
+          description: Piece updated
+        '403':
+          description: Unauthorized
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Error
 
   '/pieces/search':
     get:
@@ -157,9 +177,9 @@ paths:
         '500':
           description: Internal Error
 
-    put:
-      summary: Add or update a piece
-      description: Add or update a piece
+    post:
+      summary: Update a piece
+      description: Update a piece
       parameters:
         - name: id
           in: path
@@ -669,16 +689,18 @@ definitions:
     properties:
       id:
         type: string #uri
-      title:
-        type: string
       cfirst:
         type: string
       clast:
+        type: string
+      title:
         type: string
       key:
         type: string 
       catalog:
         type: string
+      number:
+        type: integer
       movements:
         type: array
         items:

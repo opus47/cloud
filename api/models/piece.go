@@ -34,6 +34,9 @@ type Piece struct {
 	// movements
 	Movements PieceMovements `json:"movements"`
 
+	// number
+	Number int64 `json:"number,omitempty"`
+
 	// parts
 	Parts PieceParts `json:"parts"`
 

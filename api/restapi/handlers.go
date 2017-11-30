@@ -1,6 +1,7 @@
 package restapi
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -369,5 +370,66 @@ func handleGetPiecePerformances(
 	}
 
 	return operations.NewGetPiecesIDPerformancesOK().WithPayload(result)
+
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// PUT /pieces
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func handlePutPieces(
+	params operations.PutPiecesParams,
+) middleware.Responder {
+
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Printf("pg-connect error: %v", err)
+		return operations.NewPutPiecesInternalServerError()
+	}
+	defer db.Close()
+
+	if params.Data == nil {
+		return operations.NewPutPiecesBadRequest()
+	}
+
+	movements := []string{}
+	for _, x := range params.Data.Movements {
+		movements = append(movements, x.Title)
+	}
+
+	parts := []string{}
+	for _, x := range params.Data.Parts {
+		parts = append(parts, x.Name)
+	}
+
+	q := fmt.Sprintf(`
+		SELECT new_piece(
+			%s, %s,
+			%s,
+			%s,
+			%d,
+			%s,
+			ARRAY[%v],
+			ARRAY[%v]
+		)
+	`,
+		params.Data.Cfirst,
+		params.Data.Clast,
+		params.Data.Title,
+		params.Data.Key,
+		params.Data.Number,
+		params.Data.Catalog,
+		movements,
+		parts,
+	)
+
+	_, err = db.Query(q)
+	if err != nil {
+		log.Printf("pg-stmt error: %v", err)
+		return operations.NewPutPiecesInternalServerError()
+	}
+
+	return operations.NewPutPiecesOK()
 
 }

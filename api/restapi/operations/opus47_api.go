@@ -104,6 +104,9 @@ func NewOpus47API(spec *loads.Document) *Opus47API {
 		GetRecordingsIDHandler: GetRecordingsIDHandlerFunc(func(params GetRecordingsIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetRecordingsID has not yet been implemented")
 		}),
+		PostPiecesIDHandler: PostPiecesIDHandlerFunc(func(params PostPiecesIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation PostPiecesID has not yet been implemented")
+		}),
 		PutComposersIDHandler: PutComposersIDHandlerFunc(func(params PutComposersIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PutComposersID has not yet been implemented")
 		}),
@@ -119,8 +122,8 @@ func NewOpus47API(spec *loads.Document) *Opus47API {
 		PutPerformancesIDHandler: PutPerformancesIDHandlerFunc(func(params PutPerformancesIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PutPerformancesID has not yet been implemented")
 		}),
-		PutPiecesIDHandler: PutPiecesIDHandlerFunc(func(params PutPiecesIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation PutPiecesID has not yet been implemented")
+		PutPiecesHandler: PutPiecesHandlerFunc(func(params PutPiecesParams) middleware.Responder {
+			return middleware.NotImplemented("operation PutPieces has not yet been implemented")
 		}),
 		PutRecordingsIDHandler: PutRecordingsIDHandlerFunc(func(params PutRecordingsIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PutRecordingsID has not yet been implemented")
@@ -200,6 +203,8 @@ type Opus47API struct {
 	GetRecordingsHandler GetRecordingsHandler
 	// GetRecordingsIDHandler sets the operation handler for the get recordings ID operation
 	GetRecordingsIDHandler GetRecordingsIDHandler
+	// PostPiecesIDHandler sets the operation handler for the post pieces ID operation
+	PostPiecesIDHandler PostPiecesIDHandler
 	// PutComposersIDHandler sets the operation handler for the put composers ID operation
 	PutComposersIDHandler PutComposersIDHandler
 	// PutKeysIDHandler sets the operation handler for the put keys ID operation
@@ -210,8 +215,8 @@ type Opus47API struct {
 	PutPartsIDHandler PutPartsIDHandler
 	// PutPerformancesIDHandler sets the operation handler for the put performances ID operation
 	PutPerformancesIDHandler PutPerformancesIDHandler
-	// PutPiecesIDHandler sets the operation handler for the put pieces ID operation
-	PutPiecesIDHandler PutPiecesIDHandler
+	// PutPiecesHandler sets the operation handler for the put pieces operation
+	PutPiecesHandler PutPiecesHandler
 	// PutRecordingsIDHandler sets the operation handler for the put recordings ID operation
 	PutRecordingsIDHandler PutRecordingsIDHandler
 
@@ -369,6 +374,10 @@ func (o *Opus47API) Validate() error {
 		unregistered = append(unregistered, "GetRecordingsIDHandler")
 	}
 
+	if o.PostPiecesIDHandler == nil {
+		unregistered = append(unregistered, "PostPiecesIDHandler")
+	}
+
 	if o.PutComposersIDHandler == nil {
 		unregistered = append(unregistered, "PutComposersIDHandler")
 	}
@@ -389,8 +398,8 @@ func (o *Opus47API) Validate() error {
 		unregistered = append(unregistered, "PutPerformancesIDHandler")
 	}
 
-	if o.PutPiecesIDHandler == nil {
-		unregistered = append(unregistered, "PutPiecesIDHandler")
+	if o.PutPiecesHandler == nil {
+		unregistered = append(unregistered, "PutPiecesHandler")
 	}
 
 	if o.PutRecordingsIDHandler == nil {
@@ -602,6 +611,11 @@ func (o *Opus47API) initHandlerCache() {
 	}
 	o.handlers["GET"]["/recordings/{id}"] = NewGetRecordingsID(o.context, o.GetRecordingsIDHandler)
 
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/pieces/{id}"] = NewPostPiecesID(o.context, o.PostPiecesIDHandler)
+
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
@@ -630,7 +644,7 @@ func (o *Opus47API) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/pieces/{id}"] = NewPutPiecesID(o.context, o.PutPiecesIDHandler)
+	o.handlers["PUT"]["/pieces"] = NewPutPieces(o.context, o.PutPiecesHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
