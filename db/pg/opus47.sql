@@ -31,7 +31,8 @@ CREATE TABLE pieces (
   number    integer,
   catalog   text,
 
-  UNIQUE (composer, title, key, number)
+  UNIQUE (composer, title, key, number),
+  UNIQUE (composer, catalog)
 );
 
 

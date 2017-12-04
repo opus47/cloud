@@ -1,0 +1,21 @@
+{
+  "composer": {
+    "first": "Ludwig",
+    "last": "Beethoven"
+  },
+  "title": "String Trio",
+  "key": { "name": "C Minor" },
+  "catalog": "Opus 9",
+  "number": 3,
+  "movements": [
+    { "title": "Allegro con spirito" },
+    { "title": "Adagio con spressione" },
+    { "title": "Scherzo. Allegro molto e vivace" },
+    { "title": "Finale. Presto" }
+  ],
+  "parts": [
+    { "name": "Violin" },
+    { "name": "Viola" },
+    { "name": "Cello" }
+  ]
+}

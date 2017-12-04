@@ -134,6 +134,8 @@ paths:
           description: Unauthorized
         '400':
           description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorMessage'
         '500':
           description: Internal Error
 
@@ -682,6 +684,8 @@ definitions:
         type: string #uri
       first:
         type: string
+      middle:
+        type: string
       last:
         type: string
 
@@ -689,14 +693,12 @@ definitions:
     properties:
       id:
         type: string #uri
-      cfirst:
-        type: string
-      clast:
-        type: string
+      composer:
+        $ref: '#/definitions/Composer'
       title:
         type: string
       key:
-        type: string 
+        $ref: '#/definitions/Key'
       catalog:
         type: string
       number:
@@ -787,6 +789,11 @@ definitions:
       number:
         type: integer
       file:
+        type: string
+
+  ErrorMessage:
+    properties:
+      message:
         type: string
 
 

@@ -19,17 +19,14 @@ type Piece struct {
 	// catalog
 	Catalog string `json:"catalog,omitempty"`
 
-	// cfirst
-	Cfirst string `json:"cfirst,omitempty"`
-
-	// clast
-	Clast string `json:"clast,omitempty"`
+	// composer
+	Composer *Composer `json:"composer,omitempty"`
 
 	// id
 	ID string `json:"id,omitempty"`
 
 	// key
-	Key string `json:"key,omitempty"`
+	Key *Key `json:"key,omitempty"`
 
 	// movements
 	Movements PieceMovements `json:"movements"`
@@ -48,9 +45,57 @@ type Piece struct {
 func (m *Piece) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateComposer(formats); err != nil {
+		// prop
+		res = append(res, err)
+	}
+
+	if err := m.validateKey(formats); err != nil {
+		// prop
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Piece) validateComposer(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Composer) { // not required
+		return nil
+	}
+
+	if m.Composer != nil {
+
+		if err := m.Composer.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("composer")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Piece) validateKey(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Key) { // not required
+		return nil
+	}
+
+	if m.Key != nil {
+
+		if err := m.Key.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("key")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -1,7 +1,6 @@
 package restapi
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -13,8 +12,6 @@ import (
 	"github.com/opus47/cloud/api/models"
 	"github.com/opus47/cloud/api/restapi/operations"
 )
-
-const connStr string = "host=172.17.0.3 user=postgres dbname=opus47 sslmode=disable"
 
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
@@ -61,8 +58,17 @@ func handleGetPiecesSearch(
 
 	defer rows.Close()
 	for rows.Next() {
-		p := &models.Piece{}
-		err := rows.Scan(&p.ID, &p.Cfirst, &p.Clast, &p.Title, &p.Key, &p.Catalog)
+		p := &models.Piece{
+			Composer: &models.Composer{},
+			Key:      &models.Key{},
+		}
+		err := rows.Scan(
+			&p.ID,
+			&p.Composer.First,
+			&p.Composer.Last,
+			&p.Title,
+			&p.Key.Name,
+			&p.Catalog)
 		if err != nil {
 			log.Printf("pg-scan error: %v", err)
 			return operations.NewGetPiecesSearchInternalServerError()
@@ -121,7 +127,8 @@ func handleGetPiecesId(
 
 }
 
-func fetchPieceInfo(db *sql.DB, id string) (*models.Piece, middleware.Responder) {
+func fetchPieceInfo(db *sql.DB, id string) (
+	*models.Piece, middleware.Responder) {
 
 	// grab the piece info
 	rows, err := db.Query(`
@@ -143,13 +150,17 @@ func fetchPieceInfo(db *sql.DB, id string) (*models.Piece, middleware.Responder)
 		return nil, operations.NewGetPiecesIDBadRequest()
 	}
 
-	result := &models.Piece{}
+	result := &models.Piece{
+		Composer: &models.Composer{},
+		Key:      &models.Key{},
+	}
+
 	err = rows.Scan(
 		&result.ID,
-		&result.Cfirst,
-		&result.Clast,
+		&result.Composer.First,
+		&result.Composer.Last,
 		&result.Title,
-		&result.Key,
+		&result.Key.Name,
 		&result.Catalog,
 	)
 	if err != nil {
@@ -161,7 +172,8 @@ func fetchPieceInfo(db *sql.DB, id string) (*models.Piece, middleware.Responder)
 
 }
 
-func fetchPieceMovements(db *sql.DB, id string) ([]*models.Movement, middleware.Responder) {
+func fetchPieceMovements(db *sql.DB, id string) (
+	[]*models.Movement, middleware.Responder) {
 
 	rows, err := db.Query(`
 		SELECT m.id, m.title, m.number
@@ -194,7 +206,8 @@ func fetchPieceMovements(db *sql.DB, id string) ([]*models.Movement, middleware.
 
 }
 
-func fetchPieceParts(db *sql.DB, id string) ([]*models.Part, middleware.Responder) {
+func fetchPieceParts(db *sql.DB, id string) (
+	[]*models.Part, middleware.Responder) {
 
 	rows, err := db.Query(`
 		SELECT p.id, p.name
@@ -393,43 +406,75 @@ func handlePutPieces(
 		return operations.NewPutPiecesBadRequest()
 	}
 
-	log.Printf("%#v", params.Data)
+	log.Printf("params: %#v", params.Data)
 
-	movements := []string{}
-	for _, x := range params.Data.Movements {
-		movements = append(movements, x.Title)
-	}
+	/*
+		movements := []string{}
+		for _, x := range params.Data.Movements {
+			movements = append(movements, `'`+x.Title+`'`)
+		}
+		movements_s := strings.Join(movements, ",")
 
-	parts := []string{}
-	for _, x := range params.Data.Parts {
-		parts = append(parts, x.Name)
-	}
+		parts := []string{}
+		for _, x := range params.Data.Parts {
+			parts = append(parts, `'`+x.Name+`'`)
+		}
+		parts_s := strings.Join(parts, ",")
 
-	q := fmt.Sprintf(`
-		SELECT new_piece(
-			%s, %s,
-			%s,
-			%s,
-			%d,
-			%s,
-			ARRAY[%v],
-			ARRAY[%v]
+		composer, err := getComposer(
+			params.Data.Composer.First,
+			params.Data.Composer.Last,
+			true,
 		)
-	`,
-		params.Data.Cfirst,
-		params.Data.Clast,
-		params.Data.Title,
-		params.Data.Key,
-		params.Data.Number,
-		params.Data.Catalog,
-		movements,
-		parts,
-	)
+		if err != nil {
+			return operations.NewPutPiecesInternalServerError()
+		}
 
-	_, err = db.Query(q)
-	if err != nil {
-		log.Printf("pg-stmt error: %v", err)
-		return operations.NewPutPiecesInternalServerError()
+		q := fmt.Sprintf(`
+			SELECT new_piece(
+				'%s', '%s',
+				'%s',
+				'%s',
+				%d,
+				'%s',
+				ARRAY[%s],
+				ARRAY[%s]
+			)
+		`,
+			params.Data.Composer.First,
+			params.Data.Composer.Last,
+			params.Data.Title,
+			params.Data.Key.Name,
+			params.Data.Number,
+			params.Data.Catalog,
+			movements_s,
+			parts_s,
+		)
+
+		_, err = db.Query(q)
+		if err != nil {
+			log.Printf("pg-new_piece error: %v", err)
+			return operations.NewPutPiecesInternalServerError()
+		}
+
+		_, err = db.Query("refresh materialized view mv_pieces")
+		if err != nil {
+			log.Printf("pg-refresh-materialized-view mv_pieces error: %v", err)
+			return operations.NewPutPiecesInternalServerError()
+		}
+	*/
+
+	errt := addPiece(params.Data)
+	if errt != nil {
+		switch {
+		case errt.Type() == User:
+			log.Printf("user error: %v", errt)
+			return operations.NewPutPiecesBadRequest().
+				WithPayload(&models.ErrorMessage{errt.Error()})
+		case errt.Type() == System:
+			log.Printf("system error: %v", errt)
+			return operations.NewPutPiecesInternalServerError()
+		}
 	}
 
 	return operations.NewPutPiecesOK()

@@ -12,25 +12,16 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// Composer composer
-// swagger:model Composer
-type Composer struct {
+// ErrorMessage error message
+// swagger:model ErrorMessage
+type ErrorMessage struct {
 
-	// first
-	First string `json:"first,omitempty"`
-
-	// id
-	ID string `json:"id,omitempty"`
-
-	// last
-	Last string `json:"last,omitempty"`
-
-	// middle
-	Middle string `json:"middle,omitempty"`
+	// message
+	Message string `json:"message,omitempty"`
 }
 
-// Validate validates this composer
-func (m *Composer) Validate(formats strfmt.Registry) error {
+// Validate validates this error message
+func (m *ErrorMessage) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if len(res) > 0 {
@@ -40,7 +31,7 @@ func (m *Composer) Validate(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *Composer) MarshalBinary() ([]byte, error) {
+func (m *ErrorMessage) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -48,8 +39,8 @@ func (m *Composer) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *Composer) UnmarshalBinary(b []byte) error {
-	var res Composer
+func (m *ErrorMessage) UnmarshalBinary(b []byte) error {
+	var res ErrorMessage
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

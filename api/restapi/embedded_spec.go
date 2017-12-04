@@ -601,7 +601,10 @@ func init() {
             "description": "Piece updated"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
           },
           "403": {
             "description": "Unauthorized"
@@ -885,6 +888,16 @@ func init() {
         },
         "last": {
           "type": "string"
+        },
+        "middle": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "properties": {
+        "message": {
+          "type": "string"
         }
       }
     },
@@ -983,17 +996,14 @@ func init() {
         "catalog": {
           "type": "string"
         },
-        "cfirst": {
-          "type": "string"
-        },
-        "clast": {
-          "type": "string"
+        "composer": {
+          "$ref": "#/definitions/Composer"
         },
         "id": {
           "type": "string"
         },
         "key": {
-          "type": "string"
+          "$ref": "#/definitions/Key"
         },
         "movements": {
           "type": "array",

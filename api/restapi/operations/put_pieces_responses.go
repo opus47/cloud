@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/opus47/cloud/api/models"
 )
 
 // PutPiecesOKCode is the HTTP code returned for type PutPiecesOK
@@ -42,6 +44,11 @@ const PutPiecesBadRequestCode int = 400
 swagger:response putPiecesBadRequest
 */
 type PutPiecesBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ErrorMessage `json:"body,omitempty"`
 }
 
 // NewPutPiecesBadRequest creates PutPiecesBadRequest with default headers values
@@ -49,12 +56,27 @@ func NewPutPiecesBadRequest() *PutPiecesBadRequest {
 	return &PutPiecesBadRequest{}
 }
 
+// WithPayload adds the payload to the put pieces bad request response
+func (o *PutPiecesBadRequest) WithPayload(payload *models.ErrorMessage) *PutPiecesBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the put pieces bad request response
+func (o *PutPiecesBadRequest) SetPayload(payload *models.ErrorMessage) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *PutPiecesBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // PutPiecesForbiddenCode is the HTTP code returned for type PutPiecesForbidden
