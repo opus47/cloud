@@ -408,62 +408,6 @@ func handlePutPieces(
 
 	log.Printf("params: %#v", params.Data)
 
-	/*
-		movements := []string{}
-		for _, x := range params.Data.Movements {
-			movements = append(movements, `'`+x.Title+`'`)
-		}
-		movements_s := strings.Join(movements, ",")
-
-		parts := []string{}
-		for _, x := range params.Data.Parts {
-			parts = append(parts, `'`+x.Name+`'`)
-		}
-		parts_s := strings.Join(parts, ",")
-
-		composer, err := getComposer(
-			params.Data.Composer.First,
-			params.Data.Composer.Last,
-			true,
-		)
-		if err != nil {
-			return operations.NewPutPiecesInternalServerError()
-		}
-
-		q := fmt.Sprintf(`
-			SELECT new_piece(
-				'%s', '%s',
-				'%s',
-				'%s',
-				%d,
-				'%s',
-				ARRAY[%s],
-				ARRAY[%s]
-			)
-		`,
-			params.Data.Composer.First,
-			params.Data.Composer.Last,
-			params.Data.Title,
-			params.Data.Key.Name,
-			params.Data.Number,
-			params.Data.Catalog,
-			movements_s,
-			parts_s,
-		)
-
-		_, err = db.Query(q)
-		if err != nil {
-			log.Printf("pg-new_piece error: %v", err)
-			return operations.NewPutPiecesInternalServerError()
-		}
-
-		_, err = db.Query("refresh materialized view mv_pieces")
-		if err != nil {
-			log.Printf("pg-refresh-materialized-view mv_pieces error: %v", err)
-			return operations.NewPutPiecesInternalServerError()
-		}
-	*/
-
 	errt := addPiece(params.Data)
 	if errt != nil {
 		switch {
