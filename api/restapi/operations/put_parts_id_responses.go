@@ -23,6 +23,7 @@ type PutPartsIDOK struct {
 
 // NewPutPartsIDOK creates PutPartsIDOK with default headers values
 func NewPutPartsIDOK() *PutPartsIDOK {
+
 	return &PutPartsIDOK{}
 }
 
@@ -46,6 +47,7 @@ type PutPartsIDForbidden struct {
 
 // NewPutPartsIDForbidden creates PutPartsIDForbidden with default headers values
 func NewPutPartsIDForbidden() *PutPartsIDForbidden {
+
 	return &PutPartsIDForbidden{}
 }
 

@@ -23,6 +23,7 @@ type PutPerformancesIDOK struct {
 
 // NewPutPerformancesIDOK creates PutPerformancesIDOK with default headers values
 func NewPutPerformancesIDOK() *PutPerformancesIDOK {
+
 	return &PutPerformancesIDOK{}
 }
 
@@ -46,6 +47,7 @@ type PutPerformancesIDForbidden struct {
 
 // NewPutPerformancesIDForbidden creates PutPerformancesIDForbidden with default headers values
 func NewPutPerformancesIDForbidden() *PutPerformancesIDForbidden {
+
 	return &PutPerformancesIDForbidden{}
 }
 

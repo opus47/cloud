@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 opus47-server \
   --host=0.0.0.0 \

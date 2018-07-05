@@ -23,6 +23,7 @@ type PutKeysIDOK struct {
 
 // NewPutKeysIDOK creates PutKeysIDOK with default headers values
 func NewPutKeysIDOK() *PutKeysIDOK {
+
 	return &PutKeysIDOK{}
 }
 
@@ -46,6 +47,7 @@ type PutKeysIDForbidden struct {
 
 // NewPutKeysIDForbidden creates PutKeysIDForbidden with default headers values
 func NewPutKeysIDForbidden() *PutKeysIDForbidden {
+
 	return &PutKeysIDForbidden{}
 }
 

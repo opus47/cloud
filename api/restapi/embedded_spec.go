@@ -9,8 +9,12 @@ import (
 	"encoding/json"
 )
 
-// SwaggerJSON embedded version of the swagger document used at generation time
-var SwaggerJSON json.RawMessage
+var (
+	// SwaggerJSON embedded version of the swagger document used at generation time
+	SwaggerJSON json.RawMessage
+	// FlatSwaggerJSON embedded flattened version of the swagger document used at generation time
+	FlatSwaggerJSON json.RawMessage
+)
 
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
@@ -38,7 +42,6 @@ func init() {
       "get": {
         "description": "List composers",
         "summary": "List composers",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of composers",
@@ -56,7 +59,6 @@ func init() {
       "get": {
         "description": "Get composer information",
         "summary": "Get composer information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -77,7 +79,6 @@ func init() {
       "put": {
         "description": "Add or update a composer",
         "summary": "Add or update a composer",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -114,7 +115,6 @@ func init() {
       "delete": {
         "description": "Delete a composer",
         "summary": "Delete a composer",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -144,7 +144,6 @@ func init() {
       "get": {
         "description": "List keys",
         "summary": "List keys",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of keys",
@@ -162,7 +161,6 @@ func init() {
       "get": {
         "description": "Get key information",
         "summary": "Get key information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -183,7 +181,6 @@ func init() {
       "put": {
         "description": "Add or update a key",
         "summary": "Add or update a key",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -220,7 +217,6 @@ func init() {
       "delete": {
         "description": "Delete a key",
         "summary": "Delete a key",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -250,7 +246,6 @@ func init() {
       "get": {
         "description": "List musicians",
         "summary": "List musicians",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of musicians",
@@ -268,7 +263,6 @@ func init() {
       "get": {
         "description": "Get musician information",
         "summary": "Get musician information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -289,7 +283,6 @@ func init() {
       "put": {
         "description": "Add or update a musician",
         "summary": "Add or update a musician",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -326,7 +319,6 @@ func init() {
       "delete": {
         "description": "Delete a musician",
         "summary": "Delete a musician",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -356,7 +348,6 @@ func init() {
       "get": {
         "description": "List parts",
         "summary": "List parts",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of parts",
@@ -374,7 +365,6 @@ func init() {
       "get": {
         "description": "Get part information",
         "summary": "Get part information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -395,7 +385,6 @@ func init() {
       "put": {
         "description": "Add or update a part",
         "summary": "Add or update a part",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -432,7 +421,6 @@ func init() {
       "delete": {
         "description": "Delete a part",
         "summary": "Delete a part",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -462,7 +450,6 @@ func init() {
       "get": {
         "description": "List performances",
         "summary": "List performances",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of performances",
@@ -480,7 +467,6 @@ func init() {
       "get": {
         "description": "Get performance information",
         "summary": "Get performance information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -501,7 +487,6 @@ func init() {
       "put": {
         "description": "Add or update a performance",
         "summary": "Add or update a performance",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -538,7 +523,6 @@ func init() {
       "delete": {
         "description": "Delete a performance",
         "summary": "Delete a performance",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -568,7 +552,6 @@ func init() {
       "get": {
         "description": "List pieces",
         "summary": "List pieces",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of pieces",
@@ -584,7 +567,6 @@ func init() {
       "put": {
         "description": "Add or update a piece",
         "summary": "Add or update a piece",
-        "security": null,
         "parameters": [
           {
             "description": "The piece to add or update",
@@ -619,7 +601,6 @@ func init() {
       "get": {
         "description": "Search pieces",
         "summary": "Search pieces",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -648,7 +629,6 @@ func init() {
       "get": {
         "description": "Get pieces information",
         "summary": "Get piece information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -675,7 +655,6 @@ func init() {
       "post": {
         "description": "Update a piece",
         "summary": "Update a piece",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -712,7 +691,6 @@ func init() {
       "delete": {
         "description": "Delete a piece",
         "summary": "Delete a piece",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -742,7 +720,6 @@ func init() {
       "get": {
         "description": "Get all the performances of a piece",
         "summary": "Get all the performances of a piece",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -774,7 +751,6 @@ func init() {
       "get": {
         "description": "List recordings",
         "summary": "List recordings",
-        "security": null,
         "responses": {
           "200": {
             "description": "List of recordings",
@@ -792,7 +768,6 @@ func init() {
       "get": {
         "description": "Get recording information",
         "summary": "Get recording information",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -813,7 +788,6 @@ func init() {
       "put": {
         "description": "Add or update a recording",
         "summary": "Add or update a recording",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -850,7 +824,6 @@ func init() {
       "delete": {
         "description": "Delete a recording",
         "summary": "Delete a recording",
-        "security": null,
         "parameters": [
           {
             "type": "string",
@@ -1043,6 +1016,1060 @@ func init() {
           "type": "string"
         }
       }
+    }
+  }
+}`))
+	FlatSwaggerJSON = json.RawMessage([]byte(`{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "opus47",
+    "license": {
+      "name": "Apache 2.0"
+    },
+    "version": "1.0.0"
+  },
+  "host": "opus47.goodwu.net",
+  "basePath": "/",
+  "paths": {
+    "/composers": {
+      "get": {
+        "description": "List composers",
+        "summary": "List composers",
+        "responses": {
+          "200": {
+            "description": "List of composers",
+            "schema": {
+              "$ref": "#/definitions/getComposersOKBody"
+            }
+          }
+        }
+      }
+    },
+    "/composers/{id}": {
+      "get": {
+        "description": "Get composer information",
+        "summary": "Get composer information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Composer information",
+            "schema": {
+              "$ref": "#/definitions/Composer"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a composer",
+        "summary": "Add or update a composer",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The composer to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Composer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Composer updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a composer",
+        "summary": "Delete a composer",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Composer deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/keys": {
+      "get": {
+        "description": "List keys",
+        "summary": "List keys",
+        "responses": {
+          "200": {
+            "description": "List of keys",
+            "schema": {
+              "$ref": "#/definitions/getKeysOKBody"
+            }
+          }
+        }
+      }
+    },
+    "/keys/{id}": {
+      "get": {
+        "description": "Get key information",
+        "summary": "Get key information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Key information",
+            "schema": {
+              "$ref": "#/definitions/Key"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a key",
+        "summary": "Add or update a key",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The key to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Key updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a key",
+        "summary": "Delete a key",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Key deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/musicians": {
+      "get": {
+        "description": "List musicians",
+        "summary": "List musicians",
+        "responses": {
+          "200": {
+            "description": "List of musicians",
+            "schema": {
+              "$ref": "#/definitions/getMusiciansOKBody"
+            }
+          }
+        }
+      }
+    },
+    "/musicians/{id}": {
+      "get": {
+        "description": "Get musician information",
+        "summary": "Get musician information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Musician information",
+            "schema": {
+              "$ref": "#/definitions/Musician"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a musician",
+        "summary": "Add or update a musician",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The musician to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Musician"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Musician updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a musician",
+        "summary": "Delete a musician",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Musician deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/parts": {
+      "get": {
+        "description": "List parts",
+        "summary": "List parts",
+        "responses": {
+          "200": {
+            "description": "List of parts",
+            "schema": {
+              "$ref": "#/definitions/getPartsOKBody"
+            }
+          }
+        }
+      }
+    },
+    "/parts/{id}": {
+      "get": {
+        "description": "Get part information",
+        "summary": "Get part information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Part information",
+            "schema": {
+              "$ref": "#/definitions/Part"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a part",
+        "summary": "Add or update a part",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The part to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Part"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Part updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a part",
+        "summary": "Delete a part",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Part deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/performances": {
+      "get": {
+        "description": "List performances",
+        "summary": "List performances",
+        "responses": {
+          "200": {
+            "description": "List of performances",
+            "schema": {
+              "$ref": "#/definitions/getPerformancesOKBody"
+            }
+          }
+        }
+      }
+    },
+    "/performances/{id}": {
+      "get": {
+        "description": "Get performance information",
+        "summary": "Get performance information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Performance information",
+            "schema": {
+              "$ref": "#/definitions/Performance"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a performance",
+        "summary": "Add or update a performance",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The performance to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Performance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Performance updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a performance",
+        "summary": "Delete a performance",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Performance deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/pieces": {
+      "get": {
+        "description": "List pieces",
+        "summary": "List pieces",
+        "responses": {
+          "200": {
+            "description": "List of pieces",
+            "schema": {
+              "$ref": "#/definitions/getPiecesOKBody"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a piece",
+        "summary": "Add or update a piece",
+        "parameters": [
+          {
+            "description": "The piece to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Piece"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece updated"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/pieces/search": {
+      "get": {
+        "description": "Search pieces",
+        "summary": "Search pieces",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "The search text",
+            "name": "text",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of pieces",
+            "schema": {
+              "$ref": "#/definitions/getPiecesSearchOKBody"
+            }
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/pieces/{id}": {
+      "get": {
+        "description": "Get pieces information",
+        "summary": "Get piece information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece information",
+            "schema": {
+              "$ref": "#/definitions/Piece"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Update a piece",
+        "summary": "Update a piece",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The piece to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Piece"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a piece",
+        "summary": "Delete a piece",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/pieces/{id}/performances": {
+      "get": {
+        "description": "Get all the performances of a piece",
+        "summary": "Get all the performances of a piece",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Piece information",
+            "schema": {
+              "$ref": "#/definitions/getPiecesIdPerformancesOKBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/recordings": {
+      "get": {
+        "description": "List recordings",
+        "summary": "List recordings",
+        "responses": {
+          "200": {
+            "description": "List of recordings",
+            "schema": {
+              "$ref": "#/definitions/getRecordingsOKBody"
+            }
+          }
+        }
+      }
+    },
+    "/recordings/{id}": {
+      "get": {
+        "description": "Get recording information",
+        "summary": "Get recording information",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recording information",
+            "schema": {
+              "$ref": "#/definitions/Recording"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Add or update a recording",
+        "summary": "Add or update a recording",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "The recording to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Recording"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recording updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a recording",
+        "summary": "Delete a recording",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API access authorization in JWT access token format",
+            "name": "authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recording deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Composer": {
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "middle": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Key": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Movement": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "number": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Musician": {
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "middle": {
+          "type": "string"
+        }
+      }
+    },
+    "Part": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Performance": {
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "performers": {
+          "$ref": "#/definitions/performancePerformers"
+        },
+        "recordings": {
+          "$ref": "#/definitions/performanceRecordings"
+        },
+        "venue": {
+          "type": "string"
+        }
+      }
+    },
+    "Performer": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "musician": {
+          "type": "string"
+        },
+        "part": {
+          "type": "string"
+        }
+      }
+    },
+    "Piece": {
+      "properties": {
+        "catalog": {
+          "type": "string"
+        },
+        "composer": {
+          "$ref": "#/definitions/Composer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "key": {
+          "$ref": "#/definitions/Key"
+        },
+        "movements": {
+          "$ref": "#/definitions/pieceMovements"
+        },
+        "number": {
+          "type": "integer"
+        },
+        "parts": {
+          "$ref": "#/definitions/pieceParts"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Recording": {
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "movement": {
+          "type": "string"
+        },
+        "number": {
+          "type": "integer"
+        },
+        "performance": {
+          "type": "string"
+        }
+      }
+    },
+    "getComposersOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Composer"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getKeysOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Performance"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getMusiciansOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Musician"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getPartsOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Part"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getPerformancesOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Performance"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getPiecesIdPerformancesOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Performance"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getPiecesOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Piece"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getPiecesSearchOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Piece"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "getRecordingsOKBody": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Recording"
+      },
+      "x-go-gen-location": "operations"
+    },
+    "performancePerformers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Performer"
+      },
+      "x-go-gen-location": "models"
+    },
+    "performanceRecordings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Recording"
+      },
+      "x-go-gen-location": "models"
+    },
+    "pieceMovements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Movement"
+      },
+      "x-go-gen-location": "models"
+    },
+    "pieceParts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Part"
+      },
+      "x-go-gen-location": "models"
     }
   }
 }`))

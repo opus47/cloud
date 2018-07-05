@@ -23,6 +23,7 @@ type PostPiecesIDOK struct {
 
 // NewPostPiecesIDOK creates PostPiecesIDOK with default headers values
 func NewPostPiecesIDOK() *PostPiecesIDOK {
+
 	return &PostPiecesIDOK{}
 }
 
@@ -46,6 +47,7 @@ type PostPiecesIDForbidden struct {
 
 // NewPostPiecesIDForbidden creates PostPiecesIDForbidden with default headers values
 func NewPostPiecesIDForbidden() *PostPiecesIDForbidden {
+
 	return &PostPiecesIDForbidden{}
 }
 

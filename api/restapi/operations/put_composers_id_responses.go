@@ -23,6 +23,7 @@ type PutComposersIDOK struct {
 
 // NewPutComposersIDOK creates PutComposersIDOK with default headers values
 func NewPutComposersIDOK() *PutComposersIDOK {
+
 	return &PutComposersIDOK{}
 }
 
@@ -46,6 +47,7 @@ type PutComposersIDForbidden struct {
 
 // NewPutComposersIDForbidden creates PutComposersIDForbidden with default headers values
 func NewPutComposersIDForbidden() *PutComposersIDForbidden {
+
 	return &PutComposersIDForbidden{}
 }
 

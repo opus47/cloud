@@ -10,7 +10,7 @@ import (
 	"log"
 )
 
-const connStr string = "host=172.17.0.2 user=postgres dbname=opus47 sslmode=disable"
+const connStr string = "host=db user=postgres dbname=opus47 sslmode=disable"
 
 func connect() (*sql.DB, error) {
 

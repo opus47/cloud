@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // GetPartsOKCode is the HTTP code returned for type GetPartsOK
@@ -30,6 +30,7 @@ type GetPartsOK struct {
 
 // NewGetPartsOK creates GetPartsOK with default headers values
 func NewGetPartsOK() *GetPartsOK {
+
 	return &GetPartsOK{}
 }
 

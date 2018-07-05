@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // GetPiecesSearchOKCode is the HTTP code returned for type GetPiecesSearchOK
@@ -30,6 +30,7 @@ type GetPiecesSearchOK struct {
 
 // NewGetPiecesSearchOK creates GetPiecesSearchOK with default headers values
 func NewGetPiecesSearchOK() *GetPiecesSearchOK {
+
 	return &GetPiecesSearchOK{}
 }
 
@@ -71,6 +72,7 @@ type GetPiecesSearchInternalServerError struct {
 
 // NewGetPiecesSearchInternalServerError creates GetPiecesSearchInternalServerError with default headers values
 func NewGetPiecesSearchInternalServerError() *GetPiecesSearchInternalServerError {
+
 	return &GetPiecesSearchInternalServerError{}
 }
 

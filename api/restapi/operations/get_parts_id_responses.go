@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // GetPartsIDOKCode is the HTTP code returned for type GetPartsIDOK
@@ -30,6 +30,7 @@ type GetPartsIDOK struct {
 
 // NewGetPartsIDOK creates GetPartsIDOK with default headers values
 func NewGetPartsIDOK() *GetPartsIDOK {
+
 	return &GetPartsIDOK{}
 }
 

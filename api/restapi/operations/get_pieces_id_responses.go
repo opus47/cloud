@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // GetPiecesIDOKCode is the HTTP code returned for type GetPiecesIDOK
@@ -30,6 +30,7 @@ type GetPiecesIDOK struct {
 
 // NewGetPiecesIDOK creates GetPiecesIDOK with default headers values
 func NewGetPiecesIDOK() *GetPiecesIDOK {
+
 	return &GetPiecesIDOK{}
 }
 
@@ -68,6 +69,7 @@ type GetPiecesIDBadRequest struct {
 
 // NewGetPiecesIDBadRequest creates GetPiecesIDBadRequest with default headers values
 func NewGetPiecesIDBadRequest() *GetPiecesIDBadRequest {
+
 	return &GetPiecesIDBadRequest{}
 }
 
@@ -91,6 +93,7 @@ type GetPiecesIDInternalServerError struct {
 
 // NewGetPiecesIDInternalServerError creates GetPiecesIDInternalServerError with default headers values
 func NewGetPiecesIDInternalServerError() *GetPiecesIDInternalServerError {
+
 	return &GetPiecesIDInternalServerError{}
 }
 

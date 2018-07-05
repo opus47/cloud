@@ -16,9 +16,9 @@ import (
 )
 
 // NewDeletePerformancesIDParams creates a new DeletePerformancesIDParams object
-// with the default values initialized.
+// no default values defined in spec.
 func NewDeletePerformancesIDParams() DeletePerformancesIDParams {
-	var ()
+
 	return DeletePerformancesIDParams{}
 }
 
@@ -44,9 +44,12 @@ type DeletePerformancesIDParams struct {
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
-// for simple values it will use straight method calls
+// for simple values it will use straight method calls.
+//
+// To ensure default values, the struct must have been initialized with NewDeletePerformancesIDParams() beforehand.
 func (o *DeletePerformancesIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
+
 	o.HTTPRequest = r
 
 	if err := o.bindAuthorization(r.Header[http.CanonicalHeaderKey("authorization")], true, route.Formats); err != nil {
@@ -72,6 +75,9 @@ func (o *DeletePerformancesIDParams) bindAuthorization(rawData []string, hasKey 
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+
 	if err := validate.RequiredString("authorization", "header", raw); err != nil {
 		return err
 	}
@@ -86,6 +92,9 @@ func (o *DeletePerformancesIDParams) bindID(rawData []string, hasKey bool, forma
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
 
 	o.ID = raw
 

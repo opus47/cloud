@@ -16,9 +16,9 @@ import (
 )
 
 // NewDeletePartsIDParams creates a new DeletePartsIDParams object
-// with the default values initialized.
+// no default values defined in spec.
 func NewDeletePartsIDParams() DeletePartsIDParams {
-	var ()
+
 	return DeletePartsIDParams{}
 }
 
@@ -44,9 +44,12 @@ type DeletePartsIDParams struct {
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
-// for simple values it will use straight method calls
+// for simple values it will use straight method calls.
+//
+// To ensure default values, the struct must have been initialized with NewDeletePartsIDParams() beforehand.
 func (o *DeletePartsIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
+
 	o.HTTPRequest = r
 
 	if err := o.bindAuthorization(r.Header[http.CanonicalHeaderKey("authorization")], true, route.Formats); err != nil {
@@ -72,6 +75,9 @@ func (o *DeletePartsIDParams) bindAuthorization(rawData []string, hasKey bool, f
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+
 	if err := validate.RequiredString("authorization", "header", raw); err != nil {
 		return err
 	}
@@ -86,6 +92,9 @@ func (o *DeletePartsIDParams) bindID(rawData []string, hasKey bool, formats strf
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
 
 	o.ID = raw
 

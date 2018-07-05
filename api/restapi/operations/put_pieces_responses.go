@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // PutPiecesOKCode is the HTTP code returned for type PutPiecesOK
@@ -25,6 +25,7 @@ type PutPiecesOK struct {
 
 // NewPutPiecesOK creates PutPiecesOK with default headers values
 func NewPutPiecesOK() *PutPiecesOK {
+
 	return &PutPiecesOK{}
 }
 
@@ -53,6 +54,7 @@ type PutPiecesBadRequest struct {
 
 // NewPutPiecesBadRequest creates PutPiecesBadRequest with default headers values
 func NewPutPiecesBadRequest() *PutPiecesBadRequest {
+
 	return &PutPiecesBadRequest{}
 }
 
@@ -91,6 +93,7 @@ type PutPiecesForbidden struct {
 
 // NewPutPiecesForbidden creates PutPiecesForbidden with default headers values
 func NewPutPiecesForbidden() *PutPiecesForbidden {
+
 	return &PutPiecesForbidden{}
 }
 
@@ -114,6 +117,7 @@ type PutPiecesInternalServerError struct {
 
 // NewPutPiecesInternalServerError creates PutPiecesInternalServerError with default headers values
 func NewPutPiecesInternalServerError() *PutPiecesInternalServerError {
+
 	return &PutPiecesInternalServerError{}
 }
 

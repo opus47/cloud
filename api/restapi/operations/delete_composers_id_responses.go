@@ -23,6 +23,7 @@ type DeleteComposersIDOK struct {
 
 // NewDeleteComposersIDOK creates DeleteComposersIDOK with default headers values
 func NewDeleteComposersIDOK() *DeleteComposersIDOK {
+
 	return &DeleteComposersIDOK{}
 }
 
@@ -46,6 +47,7 @@ type DeleteComposersIDForbidden struct {
 
 // NewDeleteComposersIDForbidden creates DeleteComposersIDForbidden with default headers values
 func NewDeleteComposersIDForbidden() *DeleteComposersIDForbidden {
+
 	return &DeleteComposersIDForbidden{}
 }
 

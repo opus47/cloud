@@ -48,6 +48,7 @@ func (o *DeleteMusiciansIDURL) Build() (*url.URL, error) {
 	} else {
 		return nil, errors.New("ID is required on DeleteMusiciansIDURL")
 	}
+
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/"

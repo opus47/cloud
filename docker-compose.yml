@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  api:
+    image: opus47/api:latest
+    depends_on:
+      - db
+  db:
+    image: opus47/db:latest
+

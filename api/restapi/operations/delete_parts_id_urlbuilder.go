@@ -48,6 +48,7 @@ func (o *DeletePartsIDURL) Build() (*url.URL, error) {
 	} else {
 		return nil, errors.New("ID is required on DeletePartsIDURL")
 	}
+
 	_basePath := o._basePath
 	if _basePath == "" {
 		_basePath = "/"

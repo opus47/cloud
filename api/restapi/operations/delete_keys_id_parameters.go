@@ -16,9 +16,9 @@ import (
 )
 
 // NewDeleteKeysIDParams creates a new DeleteKeysIDParams object
-// with the default values initialized.
+// no default values defined in spec.
 func NewDeleteKeysIDParams() DeleteKeysIDParams {
-	var ()
+
 	return DeleteKeysIDParams{}
 }
 
@@ -44,9 +44,12 @@ type DeleteKeysIDParams struct {
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
-// for simple values it will use straight method calls
+// for simple values it will use straight method calls.
+//
+// To ensure default values, the struct must have been initialized with NewDeleteKeysIDParams() beforehand.
 func (o *DeleteKeysIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
+
 	o.HTTPRequest = r
 
 	if err := o.bindAuthorization(r.Header[http.CanonicalHeaderKey("authorization")], true, route.Formats); err != nil {
@@ -72,6 +75,9 @@ func (o *DeleteKeysIDParams) bindAuthorization(rawData []string, hasKey bool, fo
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+
 	if err := validate.RequiredString("authorization", "header", raw); err != nil {
 		return err
 	}
@@ -86,6 +92,9 @@ func (o *DeleteKeysIDParams) bindID(rawData []string, hasKey bool, formats strfm
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
 
 	o.ID = raw
 

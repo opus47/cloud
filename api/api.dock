@@ -1,0 +1,17 @@
+FROM alpine as certs
+RUN apk update && apk add ca-certificates
+
+FROM busybox:glibc
+COPY --from=certs /etc/ssl/certs /etc/ssl/certs
+
+MAINTAINER Ryan Goodfellow ry@goodwu.net
+
+COPY ./build/opus47-server /usr/bin/
+COPY ./run.sh ./run.sh
+COPY ./cert.pem ./cert.pem
+COPY ./key.pem ./key.pem
+
+EXPOSE 443
+
+CMD /run.sh
+

@@ -36,6 +36,7 @@ func (m PerformancePerformers) Validate(formats strfmt.Registry) error {
 				}
 				return err
 			}
+
 		}
 
 	}

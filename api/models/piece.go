@@ -75,6 +75,7 @@ func (m *Piece) validateComposer(formats strfmt.Registry) error {
 			}
 			return err
 		}
+
 	}
 
 	return nil
@@ -94,6 +95,7 @@ func (m *Piece) validateKey(formats strfmt.Registry) error {
 			}
 			return err
 		}
+
 	}
 
 	return nil

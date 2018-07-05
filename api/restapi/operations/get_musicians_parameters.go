@@ -13,9 +13,9 @@ import (
 )
 
 // NewGetMusiciansParams creates a new GetMusiciansParams object
-// with the default values initialized.
+// no default values defined in spec.
 func NewGetMusiciansParams() GetMusiciansParams {
-	var ()
+
 	return GetMusiciansParams{}
 }
 
@@ -30,9 +30,12 @@ type GetMusiciansParams struct {
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
-// for simple values it will use straight method calls
+// for simple values it will use straight method calls.
+//
+// To ensure default values, the struct must have been initialized with NewGetMusiciansParams() beforehand.
 func (o *GetMusiciansParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
+
 	o.HTTPRequest = r
 
 	if len(res) > 0 {

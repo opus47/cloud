@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // GetMusiciansOKCode is the HTTP code returned for type GetMusiciansOK
@@ -30,6 +30,7 @@ type GetMusiciansOK struct {
 
 // NewGetMusiciansOK creates GetMusiciansOK with default headers values
 func NewGetMusiciansOK() *GetMusiciansOK {
+
 	return &GetMusiciansOK{}
 }
 

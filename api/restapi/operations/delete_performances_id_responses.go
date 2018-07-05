@@ -23,6 +23,7 @@ type DeletePerformancesIDOK struct {
 
 // NewDeletePerformancesIDOK creates DeletePerformancesIDOK with default headers values
 func NewDeletePerformancesIDOK() *DeletePerformancesIDOK {
+
 	return &DeletePerformancesIDOK{}
 }
 
@@ -46,6 +47,7 @@ type DeletePerformancesIDForbidden struct {
 
 // NewDeletePerformancesIDForbidden creates DeletePerformancesIDForbidden with default headers values
 func NewDeletePerformancesIDForbidden() *DeletePerformancesIDForbidden {
+
 	return &DeletePerformancesIDForbidden{}
 }
 

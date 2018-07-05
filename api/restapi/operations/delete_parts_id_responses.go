@@ -23,6 +23,7 @@ type DeletePartsIDOK struct {
 
 // NewDeletePartsIDOK creates DeletePartsIDOK with default headers values
 func NewDeletePartsIDOK() *DeletePartsIDOK {
+
 	return &DeletePartsIDOK{}
 }
 
@@ -46,6 +47,7 @@ type DeletePartsIDForbidden struct {
 
 // NewDeletePartsIDForbidden creates DeletePartsIDForbidden with default headers values
 func NewDeletePartsIDForbidden() *DeletePartsIDForbidden {
+
 	return &DeletePartsIDForbidden{}
 }
 

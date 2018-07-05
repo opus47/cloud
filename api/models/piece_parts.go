@@ -36,6 +36,7 @@ func (m PieceParts) Validate(formats strfmt.Registry) error {
 				}
 				return err
 			}
+
 		}
 
 	}

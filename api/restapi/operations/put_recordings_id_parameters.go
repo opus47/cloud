@@ -16,13 +16,13 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/opus47/cloud/api/models"
+	models "github.com/opus47/cloud/api/models"
 )
 
 // NewPutRecordingsIDParams creates a new PutRecordingsIDParams object
-// with the default values initialized.
+// no default values defined in spec.
 func NewPutRecordingsIDParams() PutRecordingsIDParams {
-	var ()
+
 	return PutRecordingsIDParams{}
 }
 
@@ -53,9 +53,12 @@ type PutRecordingsIDParams struct {
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
-// for simple values it will use straight method calls
+// for simple values it will use straight method calls.
+//
+// To ensure default values, the struct must have been initialized with NewPutRecordingsIDParams() beforehand.
 func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
+
 	o.HTTPRequest = r
 
 	if err := o.bindAuthorization(r.Header[http.CanonicalHeaderKey("authorization")], true, route.Formats); err != nil {
@@ -105,6 +108,9 @@ func (o *PutRecordingsIDParams) bindAuthorization(rawData []string, hasKey bool,
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+
 	if err := validate.RequiredString("authorization", "header", raw); err != nil {
 		return err
 	}
@@ -119,6 +125,9 @@ func (o *PutRecordingsIDParams) bindID(rawData []string, hasKey bool, formats st
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
+
+	// Required: true
+	// Parameter is provided by construction from the route
 
 	o.ID = raw
 
