@@ -1048,7 +1048,10 @@ func init() {
           "200": {
             "description": "List of composers",
             "schema": {
-              "$ref": "#/definitions/getComposersOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Composer"
+              }
             }
           }
         }
@@ -1147,7 +1150,10 @@ func init() {
           "200": {
             "description": "List of keys",
             "schema": {
-              "$ref": "#/definitions/getKeysOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Performance"
+              }
             }
           }
         }
@@ -1246,7 +1252,10 @@ func init() {
           "200": {
             "description": "List of musicians",
             "schema": {
-              "$ref": "#/definitions/getMusiciansOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Musician"
+              }
             }
           }
         }
@@ -1345,7 +1354,10 @@ func init() {
           "200": {
             "description": "List of parts",
             "schema": {
-              "$ref": "#/definitions/getPartsOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Part"
+              }
             }
           }
         }
@@ -1444,7 +1456,10 @@ func init() {
           "200": {
             "description": "List of performances",
             "schema": {
-              "$ref": "#/definitions/getPerformancesOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Performance"
+              }
             }
           }
         }
@@ -1543,7 +1558,10 @@ func init() {
           "200": {
             "description": "List of pieces",
             "schema": {
-              "$ref": "#/definitions/getPiecesOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Piece"
+              }
             }
           }
         }
@@ -1597,7 +1615,10 @@ func init() {
           "200": {
             "description": "List of pieces",
             "schema": {
-              "$ref": "#/definitions/getPiecesSearchOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Piece"
+              }
             }
           },
           "500": {
@@ -1713,7 +1734,10 @@ func init() {
           "200": {
             "description": "Piece information",
             "schema": {
-              "$ref": "#/definitions/getPiecesIdPerformancesOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Performance"
+              }
             }
           },
           "400": {
@@ -1733,7 +1757,10 @@ func init() {
           "200": {
             "description": "List of recordings",
             "schema": {
-              "$ref": "#/definitions/getRecordingsOKBody"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Recording"
+              }
             }
           }
         }
@@ -1910,10 +1937,16 @@ func init() {
           "type": "string"
         },
         "performers": {
-          "$ref": "#/definitions/performancePerformers"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Performer"
+          }
         },
         "recordings": {
-          "$ref": "#/definitions/performanceRecordings"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Recording"
+          }
         },
         "venue": {
           "type": "string"
@@ -1948,13 +1981,19 @@ func init() {
           "$ref": "#/definitions/Key"
         },
         "movements": {
-          "$ref": "#/definitions/pieceMovements"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Movement"
+          }
         },
         "number": {
           "type": "integer"
         },
         "parts": {
-          "$ref": "#/definitions/pieceParts"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Part"
+          }
         },
         "title": {
           "type": "string"
@@ -1979,97 +2018,6 @@ func init() {
           "type": "string"
         }
       }
-    },
-    "getComposersOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Composer"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getKeysOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Performance"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getMusiciansOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Musician"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getPartsOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Part"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getPerformancesOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Performance"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getPiecesIdPerformancesOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Performance"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getPiecesOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Piece"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getPiecesSearchOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Piece"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "getRecordingsOKBody": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Recording"
-      },
-      "x-go-gen-location": "operations"
-    },
-    "performancePerformers": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Performer"
-      },
-      "x-go-gen-location": "models"
-    },
-    "performanceRecordings": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Recording"
-      },
-      "x-go-gen-location": "models"
-    },
-    "pieceMovements": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Movement"
-      },
-      "x-go-gen-location": "models"
-    },
-    "pieceParts": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Part"
-      },
-      "x-go-gen-location": "models"
     }
   }
 }`))

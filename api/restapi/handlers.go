@@ -408,7 +408,14 @@ func handlePutPieces(
 
 	log.Printf("params: %#v", params.Data)
 
-	errt := addPiece(params.Data)
+	var errt errort
+	if params.Data.ID != "" {
+		log.Printf("update piece %s", params.Data.ID)
+		errt = updatePiece(params.Data)
+	} else {
+		errt = addPiece(params.Data)
+	}
+
 	if errt != nil {
 		switch {
 		case errt.Type() == User:

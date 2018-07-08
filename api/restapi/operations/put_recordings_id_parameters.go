@@ -74,8 +74,8 @@ func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.M
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
-
 		} else {
+			// validate body object
 			if err := body.Validate(route.Formats); err != nil {
 				res = append(res, err)
 			}
@@ -84,11 +84,9 @@ func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.M
 				o.Data = &body
 			}
 		}
-
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
-
 	rID, rhkID, _ := route.Params.GetOK("id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
@@ -100,6 +98,7 @@ func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.M
 	return nil
 }
 
+// bindAuthorization binds and validates parameter Authorization from header.
 func (o *PutRecordingsIDParams) bindAuthorization(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
 		return errors.Required("authorization", "header")
@@ -120,6 +119,7 @@ func (o *PutRecordingsIDParams) bindAuthorization(rawData []string, hasKey bool,
 	return nil
 }
 
+// bindID binds and validates parameter ID from path.
 func (o *PutRecordingsIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {

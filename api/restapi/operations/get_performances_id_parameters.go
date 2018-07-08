@@ -57,6 +57,7 @@ func (o *GetPerformancesIDParams) BindRequest(r *http.Request, route *middleware
 	return nil
 }
 
+// bindID binds and validates parameter ID from path.
 func (o *GetPerformancesIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {

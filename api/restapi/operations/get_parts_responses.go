@@ -25,7 +25,7 @@ type GetPartsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.GetPartsOKBody `json:"body,omitempty"`
+	Payload []*models.Part `json:"body,omitempty"`
 }
 
 // NewGetPartsOK creates GetPartsOK with default headers values
@@ -35,13 +35,13 @@ func NewGetPartsOK() *GetPartsOK {
 }
 
 // WithPayload adds the payload to the get parts o k response
-func (o *GetPartsOK) WithPayload(payload models.GetPartsOKBody) *GetPartsOK {
+func (o *GetPartsOK) WithPayload(payload []*models.Part) *GetPartsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get parts o k response
-func (o *GetPartsOK) SetPayload(payload models.GetPartsOKBody) {
+func (o *GetPartsOK) SetPayload(payload []*models.Part) {
 	o.Payload = payload
 }
 
@@ -51,7 +51,7 @@ func (o *GetPartsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.GetPartsOKBody, 0, 50)
+		payload = make([]*models.Part, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

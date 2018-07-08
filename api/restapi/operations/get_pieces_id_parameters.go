@@ -57,6 +57,7 @@ func (o *GetPiecesIDParams) BindRequest(r *http.Request, route *middleware.Match
 	return nil
 }
 
+// bindID binds and validates parameter ID from path.
 func (o *GetPiecesIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {

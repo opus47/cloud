@@ -25,7 +25,7 @@ type GetPerformancesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.GetPerformancesOKBody `json:"body,omitempty"`
+	Payload []*models.Performance `json:"body,omitempty"`
 }
 
 // NewGetPerformancesOK creates GetPerformancesOK with default headers values
@@ -35,13 +35,13 @@ func NewGetPerformancesOK() *GetPerformancesOK {
 }
 
 // WithPayload adds the payload to the get performances o k response
-func (o *GetPerformancesOK) WithPayload(payload models.GetPerformancesOKBody) *GetPerformancesOK {
+func (o *GetPerformancesOK) WithPayload(payload []*models.Performance) *GetPerformancesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get performances o k response
-func (o *GetPerformancesOK) SetPayload(payload models.GetPerformancesOKBody) {
+func (o *GetPerformancesOK) SetPayload(payload []*models.Performance) {
 	o.Payload = payload
 }
 
@@ -51,7 +51,7 @@ func (o *GetPerformancesOK) WriteResponse(rw http.ResponseWriter, producer runti
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.GetPerformancesOKBody, 0, 50)
+		payload = make([]*models.Performance, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

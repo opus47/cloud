@@ -25,7 +25,7 @@ type GetPiecesSearchOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.GetPiecesSearchOKBody `json:"body,omitempty"`
+	Payload []*models.Piece `json:"body,omitempty"`
 }
 
 // NewGetPiecesSearchOK creates GetPiecesSearchOK with default headers values
@@ -35,13 +35,13 @@ func NewGetPiecesSearchOK() *GetPiecesSearchOK {
 }
 
 // WithPayload adds the payload to the get pieces search o k response
-func (o *GetPiecesSearchOK) WithPayload(payload models.GetPiecesSearchOKBody) *GetPiecesSearchOK {
+func (o *GetPiecesSearchOK) WithPayload(payload []*models.Piece) *GetPiecesSearchOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get pieces search o k response
-func (o *GetPiecesSearchOK) SetPayload(payload models.GetPiecesSearchOKBody) {
+func (o *GetPiecesSearchOK) SetPayload(payload []*models.Piece) {
 	o.Payload = payload
 }
 
@@ -51,7 +51,7 @@ func (o *GetPiecesSearchOK) WriteResponse(rw http.ResponseWriter, producer runti
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.GetPiecesSearchOKBody, 0, 50)
+		payload = make([]*models.Piece, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

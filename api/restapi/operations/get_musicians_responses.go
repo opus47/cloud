@@ -25,7 +25,7 @@ type GetMusiciansOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.GetMusiciansOKBody `json:"body,omitempty"`
+	Payload []*models.Musician `json:"body,omitempty"`
 }
 
 // NewGetMusiciansOK creates GetMusiciansOK with default headers values
@@ -35,13 +35,13 @@ func NewGetMusiciansOK() *GetMusiciansOK {
 }
 
 // WithPayload adds the payload to the get musicians o k response
-func (o *GetMusiciansOK) WithPayload(payload models.GetMusiciansOKBody) *GetMusiciansOK {
+func (o *GetMusiciansOK) WithPayload(payload []*models.Musician) *GetMusiciansOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get musicians o k response
-func (o *GetMusiciansOK) SetPayload(payload models.GetMusiciansOKBody) {
+func (o *GetMusiciansOK) SetPayload(payload []*models.Musician) {
 	o.Payload = payload
 }
 
@@ -51,7 +51,7 @@ func (o *GetMusiciansOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.GetMusiciansOKBody, 0, 50)
+		payload = make([]*models.Musician, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

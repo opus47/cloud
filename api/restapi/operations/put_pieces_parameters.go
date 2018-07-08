@@ -57,8 +57,8 @@ func (o *PutPiecesParams) BindRequest(r *http.Request, route *middleware.Matched
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
-
 		} else {
+			// validate body object
 			if err := body.Validate(route.Formats); err != nil {
 				res = append(res, err)
 			}
@@ -67,11 +67,9 @@ func (o *PutPiecesParams) BindRequest(r *http.Request, route *middleware.Matched
 				o.Data = &body
 			}
 		}
-
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}

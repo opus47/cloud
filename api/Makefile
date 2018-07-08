@@ -4,10 +4,12 @@ server: build/opus47-server
 build:
 	mkdir -p build
 
-build/opus47-server: restapi/handlers.go cmd/opus47-server/main.go | build 
+cmd/opus47-server/main.go: openapi.yml
 	swagger generate server -f openapi.yml
+
+build/opus47-server: restapi/handlers.go restapi/db.go cmd/opus47-server/main.go | build 
 	dep ensure
-	go build -o build/opus47-server ./cmd/opus47-server
+	go build -o $@ ./cmd/opus47-server
 
 .PHONY: container
 container:
@@ -18,3 +20,4 @@ container:
 clean:
 	rm -rf models
 	rm -rf build
+	rm -rf cmd

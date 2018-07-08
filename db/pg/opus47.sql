@@ -42,7 +42,7 @@ CREATE TABLE movements (
   title   text      NOT NULL,
   number  integer,
 
-  UNIQUE(piece, title)
+  UNIQUE(piece, number)
 );
 
 CREATE TABLE parts (

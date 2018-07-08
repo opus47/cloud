@@ -59,6 +59,7 @@ func (o *GetPiecesSearchParams) BindRequest(r *http.Request, route *middleware.M
 	return nil
 }
 
+// bindText binds and validates parameter Text from query.
 func (o *GetPiecesSearchParams) bindText(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {

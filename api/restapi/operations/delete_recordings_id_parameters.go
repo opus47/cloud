@@ -67,6 +67,7 @@ func (o *DeleteRecordingsIDParams) BindRequest(r *http.Request, route *middlewar
 	return nil
 }
 
+// bindAuthorization binds and validates parameter Authorization from header.
 func (o *DeleteRecordingsIDParams) bindAuthorization(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
 		return errors.Required("authorization", "header")
@@ -87,6 +88,7 @@ func (o *DeleteRecordingsIDParams) bindAuthorization(rawData []string, hasKey bo
 	return nil
 }
 
+// bindID binds and validates parameter ID from path.
 func (o *DeleteRecordingsIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {

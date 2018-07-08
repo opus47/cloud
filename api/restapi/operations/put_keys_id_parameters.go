@@ -74,8 +74,8 @@ func (o *PutKeysIDParams) BindRequest(r *http.Request, route *middleware.Matched
 			} else {
 				res = append(res, errors.NewParseError("data", "body", "", err))
 			}
-
 		} else {
+			// validate body object
 			if err := body.Validate(route.Formats); err != nil {
 				res = append(res, err)
 			}
@@ -84,11 +84,9 @@ func (o *PutKeysIDParams) BindRequest(r *http.Request, route *middleware.Matched
 				o.Data = &body
 			}
 		}
-
 	} else {
 		res = append(res, errors.Required("data", "body"))
 	}
-
 	rID, rhkID, _ := route.Params.GetOK("id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
@@ -100,6 +98,7 @@ func (o *PutKeysIDParams) BindRequest(r *http.Request, route *middleware.Matched
 	return nil
 }
 
+// bindAuthorization binds and validates parameter Authorization from header.
 func (o *PutKeysIDParams) bindAuthorization(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
 		return errors.Required("authorization", "header")
@@ -120,6 +119,7 @@ func (o *PutKeysIDParams) bindAuthorization(rawData []string, hasKey bool, forma
 	return nil
 }
 
+// bindID binds and validates parameter ID from path.
 func (o *PutKeysIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {

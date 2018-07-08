@@ -25,7 +25,7 @@ type GetKeysOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.GetKeysOKBody `json:"body,omitempty"`
+	Payload []*models.Performance `json:"body,omitempty"`
 }
 
 // NewGetKeysOK creates GetKeysOK with default headers values
@@ -35,13 +35,13 @@ func NewGetKeysOK() *GetKeysOK {
 }
 
 // WithPayload adds the payload to the get keys o k response
-func (o *GetKeysOK) WithPayload(payload models.GetKeysOKBody) *GetKeysOK {
+func (o *GetKeysOK) WithPayload(payload []*models.Performance) *GetKeysOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get keys o k response
-func (o *GetKeysOK) SetPayload(payload models.GetKeysOKBody) {
+func (o *GetKeysOK) SetPayload(payload []*models.Performance) {
 	o.Payload = payload
 }
 
@@ -51,7 +51,7 @@ func (o *GetKeysOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.GetKeysOKBody, 0, 50)
+		payload = make([]*models.Performance, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

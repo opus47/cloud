@@ -25,7 +25,7 @@ type GetComposersOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.GetComposersOKBody `json:"body,omitempty"`
+	Payload []*models.Composer `json:"body,omitempty"`
 }
 
 // NewGetComposersOK creates GetComposersOK with default headers values
@@ -35,13 +35,13 @@ func NewGetComposersOK() *GetComposersOK {
 }
 
 // WithPayload adds the payload to the get composers o k response
-func (o *GetComposersOK) WithPayload(payload models.GetComposersOKBody) *GetComposersOK {
+func (o *GetComposersOK) WithPayload(payload []*models.Composer) *GetComposersOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get composers o k response
-func (o *GetComposersOK) SetPayload(payload models.GetComposersOKBody) {
+func (o *GetComposersOK) SetPayload(payload []*models.Composer) {
 	o.Payload = payload
 }
 
@@ -51,7 +51,7 @@ func (o *GetComposersOK) WriteResponse(rw http.ResponseWriter, producer runtime.
 	rw.WriteHeader(200)
 	payload := o.Payload
 	if payload == nil {
-		payload = make(models.GetComposersOKBody, 0, 50)
+		payload = make([]*models.Composer, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
