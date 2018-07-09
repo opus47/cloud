@@ -70,7 +70,7 @@ CREATE TABLE musicians (
   middle  text,
   last    text NOT NULL,
 
-  UNIQUE(first, middle, last)
+  UNIQUE(first, last)
 );
 
 CREATE TABLE performances (

@@ -93,7 +93,7 @@ func getComposer(tx *sql.Tx, first, last string, create bool) (*models.Composer,
 
 			q := `
 				INSERT INTO composers (first, last)
-				values ($1, $2)
+				VALUES ($1, $2)
 				RETURNING id
 			`
 
@@ -119,6 +119,59 @@ func getComposer(tx *sql.Tx, first, last string, create bool) (*models.Composer,
 		return nil, SysError("getComposer exec select error: %v", err)
 	default:
 		return c, nil
+	}
+
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// composers
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func getMusician(tx *sql.Tx, first, last string, create bool) (
+	*models.Musician, error) {
+
+	m := &models.Musician{
+		First: first,
+		Last:  last,
+	}
+
+	q := `SELECT id FROM musicians WHERE first = $1 AND last = $2`
+
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		log.Printf("getMusician: tx-prepare select - %v", err)
+		return nil, err
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(first, last).Scan(&m.ID)
+	switch {
+	case err == sql.ErrNoRows:
+		if create {
+			q := `INSERT INTO musicians VALUES (fist, last) ($1, $3)`
+			stmt, err := tx.Prepare(q)
+			if err != nil {
+				log.Printf("getMusician: tx-prepare insert - %v", err)
+				return nil, err
+			}
+			defer stmt.Close()
+
+			err = stmt.QueryRow(first, last).Scan(&m.ID)
+			if err != nil {
+				log.Printf("getMusician: insert - %v", err)
+				return nil, err
+			}
+
+			return m, nil
+		} else {
+			return nil, nil
+		}
+	case err != nil:
+		log.Printf("getMusician: select - %v", err)
+		return nil, err
+	default:
+		return m, nil
 	}
 
 }
@@ -553,10 +606,15 @@ func newPerformance(p *models.Performance) error {
 		log.Printf("newPerformance: %v", err)
 	}
 
+	//TODO add musicians
+
 	return nil
 
 }
 
+/// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+///  helper functions
+/// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 func withTx(f func(*sql.Tx) error) error {
 
 	db, err := connect()
@@ -571,7 +629,7 @@ func withTx(f func(*sql.Tx) error) error {
 
 	err = f(tx)
 
-	if err != nil {
+	if err == nil {
 		tx.Commit()
 		if err != nil {
 			return fmt.Errorf("commit: %v", err)
