@@ -58,3 +58,27 @@ func (o *PutPerformancesIDForbidden) WriteResponse(rw http.ResponseWriter, produ
 
 	rw.WriteHeader(403)
 }
+
+// PutPerformancesIDInternalServerErrorCode is the HTTP code returned for type PutPerformancesIDInternalServerError
+const PutPerformancesIDInternalServerErrorCode int = 500
+
+/*PutPerformancesIDInternalServerError Internal error
+
+swagger:response putPerformancesIdInternalServerError
+*/
+type PutPerformancesIDInternalServerError struct {
+}
+
+// NewPutPerformancesIDInternalServerError creates PutPerformancesIDInternalServerError with default headers values
+func NewPutPerformancesIDInternalServerError() *PutPerformancesIDInternalServerError {
+
+	return &PutPerformancesIDInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *PutPerformancesIDInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
+}

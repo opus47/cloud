@@ -19,18 +19,18 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewPutRecordingsIDParams creates a new PutRecordingsIDParams object
+// NewPutRecordingsParams creates a new PutRecordingsParams object
 // no default values defined in spec.
-func NewPutRecordingsIDParams() PutRecordingsIDParams {
+func NewPutRecordingsParams() PutRecordingsParams {
 
-	return PutRecordingsIDParams{}
+	return PutRecordingsParams{}
 }
 
-// PutRecordingsIDParams contains all the bound params for the put recordings ID operation
+// PutRecordingsParams contains all the bound params for the put recordings operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters PutRecordingsID
-type PutRecordingsIDParams struct {
+// swagger:parameters PutRecordings
+type PutRecordingsParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -40,11 +40,6 @@ type PutRecordingsIDParams struct {
 	  In: formData
 	*/
 	File io.ReadCloser
-	/*
-	  Required: true
-	  In: path
-	*/
-	ID string
 	/*movement number
 	  Required: true
 	  In: formData
@@ -60,8 +55,8 @@ type PutRecordingsIDParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewPutRecordingsIDParams() beforehand.
-func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewPutRecordingsParams() beforehand.
+func (o *PutRecordingsParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -85,11 +80,6 @@ func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.M
 		o.File = &runtime.File{Data: file, Header: fileHeader}
 	}
 
-	rID, rhkID, _ := route.Params.GetOK("id")
-	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	fdMovement, fdhkMovement, _ := fds.GetOK("movement")
 	if err := o.bindMovement(fdMovement, fdhkMovement, route.Formats); err != nil {
 		res = append(res, err)
@@ -109,27 +99,12 @@ func (o *PutRecordingsIDParams) BindRequest(r *http.Request, route *middleware.M
 // bindFile binds file parameter File.
 //
 // The only supported validations on files are MinLength and MaxLength
-func (o *PutRecordingsIDParams) bindFile(file multipart.File, header *multipart.FileHeader) error {
-	return nil
-}
-
-// bindID binds and validates parameter ID from path.
-func (o *PutRecordingsIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-	// Parameter is provided by construction from the route
-
-	o.ID = raw
-
+func (o *PutRecordingsParams) bindFile(file multipart.File, header *multipart.FileHeader) error {
 	return nil
 }
 
 // bindMovement binds and validates parameter Movement from formData.
-func (o *PutRecordingsIDParams) bindMovement(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *PutRecordingsParams) bindMovement(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
 		return errors.Required("movement", "formData")
 	}
@@ -154,7 +129,7 @@ func (o *PutRecordingsIDParams) bindMovement(rawData []string, hasKey bool, form
 }
 
 // bindPerformance binds and validates parameter Performance from formData.
-func (o *PutRecordingsIDParams) bindPerformance(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *PutRecordingsParams) bindPerformance(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
 		return errors.Required("performance", "formData")
 	}

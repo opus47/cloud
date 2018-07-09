@@ -23,20 +23,21 @@ import (
 // NewOpus47API creates a new Opus47 instance
 func NewOpus47API(spec *loads.Document) *Opus47API {
 	return &Opus47API{
-		handlers:            make(map[string]map[string]http.Handler),
-		formats:             strfmt.Default,
-		defaultConsumes:     "application/json",
-		defaultProduces:     "application/json",
-		customConsumers:     make(map[string]runtime.Consumer),
-		customProducers:     make(map[string]runtime.Producer),
-		ServerShutdown:      func() {},
-		spec:                spec,
-		ServeError:          errors.ServeError,
-		BasicAuthenticator:  security.BasicAuth,
-		APIKeyAuthenticator: security.APIKeyAuth,
-		BearerAuthenticator: security.BearerAuth,
-		JSONConsumer:        runtime.JSONConsumer(),
-		JSONProducer:        runtime.JSONProducer(),
+		handlers:              make(map[string]map[string]http.Handler),
+		formats:               strfmt.Default,
+		defaultConsumes:       "application/json",
+		defaultProduces:       "application/json",
+		customConsumers:       make(map[string]runtime.Consumer),
+		customProducers:       make(map[string]runtime.Producer),
+		ServerShutdown:        func() {},
+		spec:                  spec,
+		ServeError:            errors.ServeError,
+		BasicAuthenticator:    security.BasicAuth,
+		APIKeyAuthenticator:   security.APIKeyAuth,
+		BearerAuthenticator:   security.BearerAuth,
+		JSONConsumer:          runtime.JSONConsumer(),
+		MultipartformConsumer: runtime.DiscardConsumer,
+		JSONProducer:          runtime.JSONProducer(),
 		DeleteComposersIDHandler: DeleteComposersIDHandlerFunc(func(params DeleteComposersIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation DeleteComposersID has not yet been implemented")
 		}),
@@ -121,14 +122,14 @@ func NewOpus47API(spec *loads.Document) *Opus47API {
 		PutPartsIDHandler: PutPartsIDHandlerFunc(func(params PutPartsIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PutPartsID has not yet been implemented")
 		}),
-		PutPerformancesIDHandler: PutPerformancesIDHandlerFunc(func(params PutPerformancesIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation PutPerformancesID has not yet been implemented")
+		PutPerformancesHandler: PutPerformancesHandlerFunc(func(params PutPerformancesParams) middleware.Responder {
+			return middleware.NotImplemented("operation PutPerformances has not yet been implemented")
 		}),
 		PutPiecesHandler: PutPiecesHandlerFunc(func(params PutPiecesParams) middleware.Responder {
 			return middleware.NotImplemented("operation PutPieces has not yet been implemented")
 		}),
-		PutRecordingsIDHandler: PutRecordingsIDHandlerFunc(func(params PutRecordingsIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation PutRecordingsID has not yet been implemented")
+		PutRecordingsHandler: PutRecordingsHandlerFunc(func(params PutRecordingsParams) middleware.Responder {
+			return middleware.NotImplemented("operation PutRecordings has not yet been implemented")
 		}),
 	}
 }
@@ -157,6 +158,8 @@ type Opus47API struct {
 
 	// JSONConsumer registers a consumer for a "application/json" mime type
 	JSONConsumer runtime.Consumer
+	// MultipartformConsumer registers a consumer for a "multipart/form-data" mime type
+	MultipartformConsumer runtime.Consumer
 
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
@@ -217,12 +220,12 @@ type Opus47API struct {
 	PutMusiciansIDHandler PutMusiciansIDHandler
 	// PutPartsIDHandler sets the operation handler for the put parts ID operation
 	PutPartsIDHandler PutPartsIDHandler
-	// PutPerformancesIDHandler sets the operation handler for the put performances ID operation
-	PutPerformancesIDHandler PutPerformancesIDHandler
+	// PutPerformancesHandler sets the operation handler for the put performances operation
+	PutPerformancesHandler PutPerformancesHandler
 	// PutPiecesHandler sets the operation handler for the put pieces operation
 	PutPiecesHandler PutPiecesHandler
-	// PutRecordingsIDHandler sets the operation handler for the put recordings ID operation
-	PutRecordingsIDHandler PutRecordingsIDHandler
+	// PutRecordingsHandler sets the operation handler for the put recordings operation
+	PutRecordingsHandler PutRecordingsHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -280,6 +283,10 @@ func (o *Opus47API) Validate() error {
 
 	if o.JSONConsumer == nil {
 		unregistered = append(unregistered, "JSONConsumer")
+	}
+
+	if o.MultipartformConsumer == nil {
+		unregistered = append(unregistered, "MultipartformConsumer")
 	}
 
 	if o.JSONProducer == nil {
@@ -398,16 +405,16 @@ func (o *Opus47API) Validate() error {
 		unregistered = append(unregistered, "PutPartsIDHandler")
 	}
 
-	if o.PutPerformancesIDHandler == nil {
-		unregistered = append(unregistered, "PutPerformancesIDHandler")
+	if o.PutPerformancesHandler == nil {
+		unregistered = append(unregistered, "PutPerformancesHandler")
 	}
 
 	if o.PutPiecesHandler == nil {
 		unregistered = append(unregistered, "PutPiecesHandler")
 	}
 
-	if o.PutRecordingsIDHandler == nil {
-		unregistered = append(unregistered, "PutRecordingsIDHandler")
+	if o.PutRecordingsHandler == nil {
+		unregistered = append(unregistered, "PutRecordingsHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -445,6 +452,9 @@ func (o *Opus47API) ConsumersFor(mediaTypes []string) map[string]runtime.Consume
 
 		case "application/json":
 			result["application/json"] = o.JSONConsumer
+
+		case "multipart/form-data":
+			result["multipart/form-data"] = o.MultipartformConsumer
 
 		}
 
@@ -651,7 +661,7 @@ func (o *Opus47API) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/performances/{id}"] = NewPutPerformancesID(o.context, o.PutPerformancesIDHandler)
+	o.handlers["PUT"]["/performances"] = NewPutPerformances(o.context, o.PutPerformancesHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
@@ -661,7 +671,7 @@ func (o *Opus47API) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/recordings/{id}"] = NewPutRecordingsID(o.context, o.PutRecordingsIDHandler)
+	o.handlers["PUT"]["/recordings"] = NewPutRecordings(o.context, o.PutRecordingsHandler)
 
 }
 

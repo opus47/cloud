@@ -37,98 +37,182 @@ func configureAPI(api *operations.Opus47API) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.DeleteComposersIDHandler = operations.DeleteComposersIDHandlerFunc(func(params operations.DeleteComposersIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeleteComposersID has not yet been implemented")
-	})
-	api.DeleteKeysIDHandler = operations.DeleteKeysIDHandlerFunc(func(params operations.DeleteKeysIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeleteKeysID has not yet been implemented")
-	})
-	api.DeleteMusiciansIDHandler = operations.DeleteMusiciansIDHandlerFunc(func(params operations.DeleteMusiciansIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeleteMusiciansID has not yet been implemented")
-	})
-	api.DeletePartsIDHandler = operations.DeletePartsIDHandlerFunc(func(params operations.DeletePartsIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeletePartsID has not yet been implemented")
-	})
-	api.DeletePerformancesIDHandler = operations.DeletePerformancesIDHandlerFunc(func(params operations.DeletePerformancesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeletePerformancesID has not yet been implemented")
-	})
-	api.DeletePiecesIDHandler = operations.DeletePiecesIDHandlerFunc(func(params operations.DeletePiecesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeletePiecesID has not yet been implemented")
-	})
-	api.DeleteRecordingsIDHandler = operations.DeleteRecordingsIDHandlerFunc(func(params operations.DeleteRecordingsIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeleteRecordingsID has not yet been implemented")
-	})
-	api.GetComposersHandler = operations.GetComposersHandlerFunc(func(params operations.GetComposersParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetComposers has not yet been implemented")
-	})
-	api.GetComposersIDHandler = operations.GetComposersIDHandlerFunc(func(params operations.GetComposersIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetComposersID has not yet been implemented")
-	})
-	api.GetKeysHandler = operations.GetKeysHandlerFunc(func(params operations.GetKeysParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetKeys has not yet been implemented")
-	})
-	api.GetKeysIDHandler = operations.GetKeysIDHandlerFunc(func(params operations.GetKeysIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetKeysID has not yet been implemented")
-	})
+	/* ==========================================================================
+	 *
+	 *    Composers
+	 *
+	 * ========================================================================*/
+
+	api.DeleteComposersIDHandler = operations.DeleteComposersIDHandlerFunc(
+		func(params operations.DeleteComposersIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetComposersHandler = operations.GetComposersHandlerFunc(
+		func(params operations.GetComposersParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetComposersIDHandler = operations.GetComposersIDHandlerFunc(
+		func(params operations.GetComposersIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.PutComposersIDHandler = operations.PutComposersIDHandlerFunc(
+		func(params operations.PutComposersIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	/* ==========================================================================
+	 *
+	 *    Keys
+	 *
+	 * ========================================================================*/
+
+	api.DeleteKeysIDHandler = operations.DeleteKeysIDHandlerFunc(
+		func(params operations.DeleteKeysIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetKeysHandler = operations.GetKeysHandlerFunc(
+		func(params operations.GetKeysParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetKeysIDHandler = operations.GetKeysIDHandlerFunc(
+		func(params operations.GetKeysIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.PutKeysIDHandler = operations.PutKeysIDHandlerFunc(
+		func(params operations.PutKeysIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	/* ==========================================================================
+	 *
+	 *    Musicians
+	 *
+	 * ========================================================================*/
+
+	api.DeleteMusiciansIDHandler = operations.DeleteMusiciansIDHandlerFunc(
+		func(params operations.DeleteMusiciansIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
 
 	api.GetMusiciansHandler = operations.GetMusiciansHandlerFunc(handleGetMusicians)
 
-	api.GetMusiciansIDHandler = operations.GetMusiciansIDHandlerFunc(func(params operations.GetMusiciansIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetMusiciansID has not yet been implemented")
-	})
-	api.GetPartsHandler = operations.GetPartsHandlerFunc(func(params operations.GetPartsParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetParts has not yet been implemented")
-	})
-	api.GetPartsIDHandler = operations.GetPartsIDHandlerFunc(func(params operations.GetPartsIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetPartsID has not yet been implemented")
-	})
-	api.GetPerformancesHandler = operations.GetPerformancesHandlerFunc(func(params operations.GetPerformancesParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetPerformances has not yet been implemented")
-	})
-	api.GetPerformancesIDHandler = operations.GetPerformancesIDHandlerFunc(func(params operations.GetPerformancesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetPerformancesID has not yet been implemented")
-	})
-	api.GetPiecesHandler = operations.GetPiecesHandlerFunc(func(params operations.GetPiecesParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetPieces has not yet been implemented")
-	})
+	api.GetMusiciansIDHandler = operations.GetMusiciansIDHandlerFunc(
+		func(params operations.GetMusiciansIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
 
-	api.GetPiecesIDHandler = operations.GetPiecesIDHandlerFunc(handleGetPiecesId)
+	api.PutMusiciansIDHandler = operations.PutMusiciansIDHandlerFunc(
+		func(params operations.PutMusiciansIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
 
-	api.GetPiecesSearchHandler = operations.GetPiecesSearchHandlerFunc(handleGetPiecesSearch)
+	/* ==========================================================================
+	 *
+	 *    Parts
+	 *
+	 * ========================================================================*/
 
-	api.GetPiecesIDPerformancesHandler = operations.GetPiecesIDPerformancesHandlerFunc(
-		handleGetPiecePerformances,
-	)
+	api.DeletePartsIDHandler = operations.DeletePartsIDHandlerFunc(
+		func(params operations.DeletePartsIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetPartsHandler = operations.GetPartsHandlerFunc(
+		func(params operations.GetPartsParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetPartsIDHandler = operations.GetPartsIDHandlerFunc(
+		func(params operations.GetPartsIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.PutPartsIDHandler = operations.PutPartsIDHandlerFunc(
+		func(params operations.PutPartsIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	/* ==========================================================================
+	 *
+	 *    Performances
+	 *
+	 * ========================================================================*/
+	api.DeletePerformancesIDHandler = operations.DeletePerformancesIDHandlerFunc(
+		func(params operations.DeletePerformancesIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetPerformancesHandler = operations.GetPerformancesHandlerFunc(
+		func(params operations.GetPerformancesParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetPerformancesIDHandler = operations.GetPerformancesIDHandlerFunc(
+		func(params operations.GetPerformancesIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.PutPerformancesHandler = operations.PutPerformancesHandlerFunc(
+		handlePutPerformances)
+
+	/* ==========================================================================
+	 *
+	 *    Pieces
+	 *
+	 * ========================================================================*/
+	api.DeletePiecesIDHandler = operations.DeletePiecesIDHandlerFunc(
+		func(params operations.DeletePiecesIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetPiecesHandler = operations.GetPiecesHandlerFunc(
+		func(params operations.GetPiecesParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetPiecesIDHandler =
+		operations.GetPiecesIDHandlerFunc(handleGetPiecesId)
+
+	api.GetPiecesSearchHandler =
+		operations.GetPiecesSearchHandlerFunc(handleGetPiecesSearch)
+
+	api.GetPiecesIDPerformancesHandler =
+		operations.GetPiecesIDPerformancesHandlerFunc(handleGetPiecePerformances)
 
 	api.PutPiecesHandler = operations.PutPiecesHandlerFunc(handlePutPieces)
 
-	api.GetRecordingsHandler = operations.GetRecordingsHandlerFunc(func(params operations.GetRecordingsParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetRecordings has not yet been implemented")
-	})
-	api.GetRecordingsIDHandler = operations.GetRecordingsIDHandlerFunc(func(params operations.GetRecordingsIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetRecordingsID has not yet been implemented")
-	})
-	api.PutComposersIDHandler = operations.PutComposersIDHandlerFunc(func(params operations.PutComposersIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutComposersID has not yet been implemented")
-	})
-	api.PutKeysIDHandler = operations.PutKeysIDHandlerFunc(func(params operations.PutKeysIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutKeysID has not yet been implemented")
-	})
-	api.PutMusiciansIDHandler = operations.PutMusiciansIDHandlerFunc(func(params operations.PutMusiciansIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutMusiciansID has not yet been implemented")
-	})
-	api.PutPartsIDHandler = operations.PutPartsIDHandlerFunc(func(params operations.PutPartsIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutPartsID has not yet been implemented")
-	})
-	api.PutPerformancesIDHandler = operations.PutPerformancesIDHandlerFunc(func(params operations.PutPerformancesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutPerformancesID has not yet been implemented")
-	})
-	api.PostPiecesIDHandler = operations.PostPiecesIDHandlerFunc(func(params operations.PostPiecesIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PostPiecesID has not yet been implemented")
-	})
-	api.PutRecordingsIDHandler = operations.PutRecordingsIDHandlerFunc(func(params operations.PutRecordingsIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutRecordingsID has not yet been implemented")
-	})
+	api.PostPiecesIDHandler = operations.PostPiecesIDHandlerFunc(
+		func(params operations.PostPiecesIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	/* ==========================================================================
+	 *
+	 *    Recordings
+	 *
+	 * ========================================================================*/
+	api.DeleteRecordingsIDHandler = operations.DeleteRecordingsIDHandlerFunc(
+		func(params operations.DeleteRecordingsIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.GetRecordingsHandler = operations.GetRecordingsHandlerFunc(
+		func(params operations.GetRecordingsParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+	api.GetRecordingsIDHandler = operations.GetRecordingsIDHandlerFunc(
+		func(params operations.GetRecordingsIDParams) middleware.Responder {
+			return middleware.NotImplemented("not implemented")
+		})
+
+	api.PutRecordingsHandler =
+		operations.PutRecordingsHandlerFunc(handlePutRecordings)
 
 	api.ServerShutdown = func() {}
 

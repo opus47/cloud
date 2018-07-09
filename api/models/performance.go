@@ -30,11 +30,11 @@ type Performance struct {
 	// performers
 	Performers []*Performer `json:"performers"`
 
-	// recordings
-	Recordings []*Recording `json:"recordings"`
+	// piece Id
+	PieceID string `json:"pieceId,omitempty"`
 
-	// venue
-	Venue string `json:"venue,omitempty"`
+	// title
+	Title string `json:"title,omitempty"`
 }
 
 // Validate validates this performance
@@ -42,10 +42,6 @@ func (m *Performance) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validatePerformers(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRecordings(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -70,31 +66,6 @@ func (m *Performance) validatePerformers(formats strfmt.Registry) error {
 			if err := m.Performers[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("performers" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *Performance) validateRecordings(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Recordings) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Recordings); i++ {
-		if swag.IsZero(m.Recordings[i]) { // not required
-			continue
-		}
-
-		if m.Recordings[i] != nil {
-			if err := m.Recordings[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("recordings" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

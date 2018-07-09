@@ -87,13 +87,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The composer to add or update",
             "name": "data",
             "in": "body",
@@ -120,13 +113,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -189,13 +175,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The key to add or update",
             "name": "data",
             "in": "body",
@@ -222,13 +201,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -291,13 +263,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The musician to add or update",
             "name": "data",
             "in": "body",
@@ -324,13 +289,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -393,13 +351,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The part to add or update",
             "name": "data",
             "in": "body",
@@ -426,13 +377,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -461,6 +405,32 @@ func init() {
             }
           }
         }
+      },
+      "put": {
+        "description": "Add or update a performance",
+        "summary": "Add or update a performance",
+        "parameters": [
+          {
+            "description": "The performance to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Performance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Performance updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
       }
     },
     "/performances/{id}": {
@@ -481,42 +451,9 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Performance"
             }
-          }
-        }
-      },
-      "put": {
-        "description": "Add or update a performance",
-        "summary": "Add or update a performance",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "id",
-            "in": "path",
-            "required": true
           },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "The performance to add or update",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Performance"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Performance updated"
-          },
-          "403": {
-            "description": "Unauthorized"
+          "500": {
+            "description": "Internal error"
           }
         }
       },
@@ -528,13 +465,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -663,13 +593,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The piece to add or update",
             "name": "data",
             "in": "body",
@@ -696,13 +619,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -762,6 +678,47 @@ func init() {
             }
           }
         }
+      },
+      "put": {
+        "description": "Add or update a recording",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "summary": "Add or update a recording",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "performance name",
+            "name": "performance",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "movement number",
+            "name": "movement",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "file",
+            "description": "recording file",
+            "name": "file",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recording updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
       }
     },
     "/recordings/{id}": {
@@ -785,42 +742,6 @@ func init() {
           }
         }
       },
-      "put": {
-        "description": "Add or update a recording",
-        "summary": "Add or update a recording",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "The recording to add or update",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Recording"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Recording updated"
-          },
-          "403": {
-            "description": "Unauthorized"
-          }
-        }
-      },
       "delete": {
         "description": "Delete a recording",
         "summary": "Delete a recording",
@@ -829,13 +750,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -940,13 +854,10 @@ func init() {
             "$ref": "#/definitions/Performer"
           }
         },
-        "recordings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Recording"
-          }
+        "pieceId": {
+          "type": "string"
         },
-        "venue": {
+        "title": {
           "type": "string"
         }
       }
@@ -1008,9 +919,6 @@ func init() {
         },
         "movement": {
           "type": "string"
-        },
-        "number": {
-          "type": "integer"
         },
         "performance": {
           "type": "string"
@@ -1089,13 +997,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The composer to add or update",
             "name": "data",
             "in": "body",
@@ -1122,13 +1023,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1191,13 +1085,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The key to add or update",
             "name": "data",
             "in": "body",
@@ -1224,13 +1111,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1293,13 +1173,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The musician to add or update",
             "name": "data",
             "in": "body",
@@ -1326,13 +1199,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1395,13 +1261,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The part to add or update",
             "name": "data",
             "in": "body",
@@ -1428,13 +1287,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1463,6 +1315,32 @@ func init() {
             }
           }
         }
+      },
+      "put": {
+        "description": "Add or update a performance",
+        "summary": "Add or update a performance",
+        "parameters": [
+          {
+            "description": "The performance to add or update",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Performance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Performance updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
       }
     },
     "/performances/{id}": {
@@ -1483,42 +1361,9 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Performance"
             }
-          }
-        }
-      },
-      "put": {
-        "description": "Add or update a performance",
-        "summary": "Add or update a performance",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "id",
-            "in": "path",
-            "required": true
           },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "The performance to add or update",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Performance"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Performance updated"
-          },
-          "403": {
-            "description": "Unauthorized"
+          "500": {
+            "description": "Internal error"
           }
         }
       },
@@ -1530,13 +1375,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1665,13 +1503,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
             "description": "The piece to add or update",
             "name": "data",
             "in": "body",
@@ -1698,13 +1529,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1764,6 +1588,47 @@ func init() {
             }
           }
         }
+      },
+      "put": {
+        "description": "Add or update a recording",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "summary": "Add or update a recording",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "performance name",
+            "name": "performance",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "movement number",
+            "name": "movement",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "file",
+            "description": "recording file",
+            "name": "file",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recording updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
       }
     },
     "/recordings/{id}": {
@@ -1787,42 +1652,6 @@ func init() {
           }
         }
       },
-      "put": {
-        "description": "Add or update a recording",
-        "summary": "Add or update a recording",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "The recording to add or update",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Recording"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Recording updated"
-          },
-          "403": {
-            "description": "Unauthorized"
-          }
-        }
-      },
       "delete": {
         "description": "Delete a recording",
         "summary": "Delete a recording",
@@ -1831,13 +1660,6 @@ func init() {
             "type": "string",
             "name": "id",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "API access authorization in JWT access token format",
-            "name": "authorization",
-            "in": "header",
             "required": true
           }
         ],
@@ -1942,13 +1764,10 @@ func init() {
             "$ref": "#/definitions/Performer"
           }
         },
-        "recordings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Recording"
-          }
+        "pieceId": {
+          "type": "string"
         },
-        "venue": {
+        "title": {
           "type": "string"
         }
       }
@@ -2010,9 +1829,6 @@ func init() {
         },
         "movement": {
           "type": "string"
-        },
-        "number": {
-          "type": "integer"
         },
         "performance": {
           "type": "string"

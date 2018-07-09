@@ -56,3 +56,27 @@ func (o *GetPerformancesIDOK) WriteResponse(rw http.ResponseWriter, producer run
 		}
 	}
 }
+
+// GetPerformancesIDInternalServerErrorCode is the HTTP code returned for type GetPerformancesIDInternalServerError
+const GetPerformancesIDInternalServerErrorCode int = 500
+
+/*GetPerformancesIDInternalServerError Internal error
+
+swagger:response getPerformancesIdInternalServerError
+*/
+type GetPerformancesIDInternalServerError struct {
+}
+
+// NewGetPerformancesIDInternalServerError creates GetPerformancesIDInternalServerError with default headers values
+func NewGetPerformancesIDInternalServerError() *GetPerformancesIDInternalServerError {
+
+	return &GetPerformancesIDInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetPerformancesIDInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
+}

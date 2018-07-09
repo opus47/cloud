@@ -276,55 +276,48 @@ INSERT INTO performers (performance, musician, part) values
   (SELECT id FROM parts where name = 'Cello')
 );
 
-INSERT INTO recordings (performance, movement, file) values
+INSERT INTO recordings (performance, movement) values
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Adagio ma non troppo e molto espressivo'),
-  'ce3a4dc-1.flac'
+    title = 'Adagio ma non troppo e molto espressivo')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Allegro molto vivace'),
-  'ce3a4dc-2.flac'
+    title = 'Allegro molto vivace')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Allegro moderato'),
-  'ce3a4dc-3.flac'
+    title = 'Allegro moderato')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Andante ma non troppo e molto cantabile'),
-  'ce3a4dc-4.flac'
+    title = 'Andante ma non troppo e molto cantabile')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Presto'),
-  'ce3a4dc-5.flac'
+    title = 'Presto')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Adagio quasi un poco andante'),
-  'ce3a4dc-6.flac'
+    title = 'Adagio quasi un poco andante')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%olympic%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Allegro'),
-  'ce3a4dc-7.flac'
+    title = 'Allegro')
 );
 
 
@@ -358,53 +351,46 @@ INSERT INTO performers (performance, musician, part) values
   (SELECT id FROM parts where name = 'Cello')
 );
 
-INSERT INTO recordings (performance, movement, file) values
+INSERT INTO recordings (performance, movement) values
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Adagio ma non troppo e molto espressivo'),
-  'be3a4dc-1.flac'
+    title = 'Adagio ma non troppo e molto espressivo')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Allegro molto vivace'),
-  'be3a4dc-2.flac'
+    title = 'Allegro molto vivace')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Allegro moderato'),
-  'be3a4dc-3.flac'
+    title = 'Allegro moderato')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Andante ma non troppo e molto cantabile'),
-  'be3a4dc-4.flac'
+    title = 'Andante ma non troppo e molto cantabile')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Presto'),
-  'be3a4dc-5.flac'
+    title = 'Presto')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Adagio quasi un poco andante'),
-  'be3a4dc-6.flac'
+    title = 'Adagio quasi un poco andante')
 ),
 (
   (SELECT id FROM performances WHERE title ilike '%santa%'),
   (SELECT id FROM movements WHERE 
     piece = (SELECT id FROM pieces WHERE catalog = 'Opus 131') AND
-    title = 'Allegro'),
-  'be3a4dc-7.flac'
+    title = 'Allegro')
 );

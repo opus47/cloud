@@ -1,13 +1,14 @@
 package restapi
 
 import (
-	"github.com/opus47/cloud/api/models"
-
 	"database/sql"
+	"fmt"
+	"log"
+
 	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 
-	"log"
+	"github.com/opus47/cloud/api/models"
 )
 
 const connStr string = "host=db user=postgres dbname=opus47 sslmode=disable"
@@ -23,6 +24,12 @@ func connect() (*sql.DB, error) {
 	return db, nil
 
 }
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// keys
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 func getKey(name string) (*models.Key, errort) {
 
@@ -55,6 +62,12 @@ func getKey(name string) (*models.Key, errort) {
 	return k, nil
 
 }
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// composers
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 func getComposer(tx *sql.Tx, first, last string, create bool) (*models.Composer, errort) {
 
@@ -109,6 +122,12 @@ func getComposer(tx *sql.Tx, first, last string, create bool) (*models.Composer,
 	}
 
 }
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// pieces
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 func addPiece(piece *models.Piece) errort {
 
@@ -403,4 +422,164 @@ func updatePiece(piece *models.Piece) errort {
 	}
 
 	return nil
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// recordings
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// adds a new recording to DB and returns generated uuid
+func newRecording(performance string, movement int64) (string, error) {
+
+	db, err := connect()
+	if err != nil {
+		log.Printf("newRecording: connect error %v", err)
+		return "", err
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Printf("newRecording: tx begin error %v", err)
+		return "", err
+	}
+
+	q := `
+	INSERT INTO recordings (performance, movement) VALUES (
+		(SELECT id FROM performances WHERE title = $1),
+		(SELECT id FROM movements WHERE
+			piece = (SELECT id FROM pieces WHERE
+				id = (SELECT piece FROM performances WHERE title = $1)
+			) AND
+			number = $2
+		)
+	) RETURNING id
+	`
+
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		log.Printf("newRecording: tx prepare error %v", err)
+		return "", err
+	}
+	defer stmt.Close()
+
+	var id string
+	err = stmt.QueryRow(performance, movement).Scan(&id)
+	if err != nil {
+		log.Printf("newRecording: query error %v", err)
+		return "", err
+	}
+
+	tx.Commit()
+	if err != nil {
+		log.Printf("newRecording: commit error %v", err)
+		return "", err
+	}
+
+	return id, nil
+
+}
+
+// deletes a recording from the DB
+func deleteRecording(id string) error {
+
+	db, err := connect()
+	if err != nil {
+		log.Printf("deleteRecording: connect error %v", err)
+		return err
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Printf("deleteRecording: tx begin error %v", err)
+		return err
+	}
+
+	q := `DELETE FROM recordings WHERE id = $1`
+
+	stmt, err := tx.Prepare(q)
+	if err != nil {
+		log.Printf("deleteRecording: tx prepare error %v", err)
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	if err != nil {
+		log.Printf("deleteRecording: exec error %v", err)
+		return err
+	}
+
+	tx.Commit()
+	if err != nil {
+		log.Printf("deleteRecording: commit error %v", err)
+		return err
+	}
+
+	return nil
+
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// performances
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func newPerformance(p *models.Performance) error {
+
+	err := withTx(func(tx *sql.Tx) error {
+
+		q :=
+			`INSERT INTO performances (piece, title, description) VALUES($1, $2, $3)`
+
+		stmt, err := tx.Prepare(q)
+		if err != nil {
+			return fmt.Errorf("prepare: %v", err)
+		}
+		defer stmt.Close()
+
+		_, err = stmt.Exec(p.PieceID, p.Title, p.Description)
+		if err != nil {
+			return fmt.Errorf("exec: %v", err)
+		}
+
+		return nil
+
+	})
+
+	if err != nil {
+		log.Printf("newPerformance: %v", err)
+	}
+
+	return nil
+
+}
+
+func withTx(f func(*sql.Tx) error) error {
+
+	db, err := connect()
+	if err != nil {
+		return fmt.Errorf("connect: %v", err)
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("begin: %v", err)
+	}
+
+	err = f(tx)
+
+	if err != nil {
+		tx.Commit()
+		if err != nil {
+			return fmt.Errorf("commit: %v", err)
+		}
+		return nil
+	} else {
+		tx.Rollback()
+		return err
+	}
+
 }

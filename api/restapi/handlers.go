@@ -1,7 +1,9 @@
 package restapi
 
 import (
+	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
 	"database/sql"
@@ -315,7 +317,7 @@ func handleGetPiecePerformances(
 	result := []*models.Performance{}
 	for rows.Next() {
 		p := &models.Performance{}
-		err = rows.Scan(&p.ID, &p.Venue)
+		err = rows.Scan(&p.ID, &p.Title)
 		if err != nil {
 			log.Printf("[performance] pg-scan error: %v", err)
 			return operations.NewGetPiecesIDInternalServerError()
@@ -355,32 +357,34 @@ func handleGetPiecePerformances(
 	}
 
 	// get recording information
-	for _, p := range result {
+	/*
+		for _, p := range result {
 
-		rows, err := db.Query(`
-			SELECT r.id, r.file, m.title, m.number
-			FROM recordings as r
-			JOIN movements as m on r.movement = m.id
-			WHERE r.performance = '` + p.ID + `'
-			ORDER BY m.number
-		`)
-		if err != nil {
-			log.Printf("pg-query error: %v", err)
-			return operations.NewGetPiecesIDInternalServerError()
-		}
-		defer rows.Close()
-
-		for rows.Next() {
-			x := &models.Recording{}
-			err := rows.Scan(&x.ID, &x.File, &x.Movement, &x.Number)
+			rows, err := db.Query(`
+				SELECT r.id, m.title, m.number
+				FROM recordings as r
+				JOIN movements as m on r.movement = m.id
+				WHERE r.performance = '` + p.ID + `'
+				ORDER BY m.number
+			`)
 			if err != nil {
-				log.Printf("[performance-recordings] pg-scan error: %v", err)
+				log.Printf("pg-query error: %v", err)
 				return operations.NewGetPiecesIDInternalServerError()
 			}
-			p.Recordings = append(p.Recordings, x)
-		}
+			defer rows.Close()
 
-	}
+			for rows.Next() {
+				x := &models.Recording{}
+				err := rows.Scan(&x.ID, &x.Movement, &x.Number)
+				if err != nil {
+					log.Printf("[performance-recordings] pg-scan error: %v", err)
+					return operations.NewGetPiecesIDInternalServerError()
+				}
+				p.Recordings = append(p.Recordings, x)
+			}
+
+		}
+	*/
 
 	return operations.NewGetPiecesIDPerformancesOK().WithPayload(result)
 
@@ -429,5 +433,63 @@ func handlePutPieces(
 	}
 
 	return operations.NewPutPiecesOK()
+
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// PUT /performances
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func handlePutPerformances(
+	params operations.PutPerformancesParams,
+) middleware.Responder {
+
+	err := newPerformance(params.Data)
+	if err != nil {
+		return operations.NewPutPerformancesInternalServerError()
+	} else {
+		return operations.NewPutPerformancesOK()
+	}
+
+}
+
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// PUT /recordings
+///
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func handlePutRecordings(
+	params operations.PutRecordingsParams,
+) middleware.Responder {
+
+	// put the recording in the db
+	id, err := newRecording(params.Performance, params.Movement)
+	if err != nil {
+		return operations.NewPutRecordingsInternalServerError()
+	}
+
+	data, err := ioutil.ReadAll(params.File)
+	if err != nil {
+		log.Printf("PutRecording: failed to read file: %v", err)
+		deleteRecording(id)
+		return operations.NewPutRecordingsInternalServerError()
+	}
+
+	err = os.MkdirAll("/opus47/recordings", 0755)
+	if err != nil {
+		log.Printf("PutRecording: failed to create target directory %v", err)
+	}
+
+	err = ioutil.WriteFile("/opus47/recordings/"+id, data, 0655)
+	if err != nil {
+		log.Printf("PutRecording: failed to write file: %v", err)
+		deleteRecording(id)
+		return operations.NewPutRecordingsInternalServerError()
+	}
+
+	return operations.NewPutRecordingsOK()
 
 }

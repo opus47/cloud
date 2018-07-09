@@ -76,7 +76,7 @@ CREATE TABLE musicians (
 CREATE TABLE performances (
   id            UUID  PRIMARY KEY DEFAULT gen_random_uuid(),
   piece         UUID  REFERENCES pieces NOT NULL,
-  title         text, -- TODO change to veneu
+  title         text,
   description   text
 );
 
@@ -84,7 +84,6 @@ CREATE TABLE recordings (
   id            UUID  PRIMARY KEY DEFAULT gen_random_uuid(),
   performance   UUID  REFERENCES performances NOT NULL,
   movement      UUID  REFERENCES movements NOT NULL,
-  file          text,
 
   UNIQUE(performance, movement)
 );

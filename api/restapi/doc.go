@@ -12,6 +12,7 @@ Package restapi opus47
 
     Consumes:
     - application/json
+    - multipart/form-data
 
     Produces:
     - application/json
